@@ -1239,7 +1239,7 @@
     react-color "^2.19.3"
     react-tiny-popover "^6.0.5"
 
-"@designable/react@1.0.0-beta.45":
+"@designable/react@1.0.0-beta.45", "@designable/react@^1.0.0-beta.45":
   version "1.0.0-beta.45"
   resolved "https://registry.yarnpkg.com/@designable/react/-/react-1.0.0-beta.45.tgz#d6b592904c55bce969959c14ec846a6dc262556c"
   integrity sha512-zZQ7cIl+X1ntXCNkeesCeMtLChWbFLsKTNmMVA6gS1wUWIlWb2aFQg/cM3P2JVmu2ovBE5EEEnomC94Nwz390A==
