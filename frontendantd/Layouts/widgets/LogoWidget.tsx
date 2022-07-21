@@ -2,8 +2,8 @@ import React from 'react'
 import { useTheme } from '@designable/react'
 
 const logo = {
-  dark: '//raw.githubusercontent.com/sercan-basaran/Otostock/main/winform.png',
-  light: '//raw.githubusercontent.com/sercan-basaran/Otostock/main/winform.png',
+  dark: '',
+  light: '',
 }
 
 export const LogoWidget: React.FC = () => {
