@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
+
 import {
   Designer,
   IconWidget,
@@ -29,6 +29,7 @@ import { Content } from './content'
 import { Space, Button, Radio } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 //import { Sandbox } from '@designable/react-sandbox'
+
 import '../../../node_modules/antd/dist/antd.less'
 
 const RootBehavior = createBehavior({
@@ -62,7 +63,7 @@ const InputBehavior = createBehavior({
         'field-properties': {
           type: 'void',
           'x-component': 'CollapseItem',
-          title: '字段属性',
+          title: 'Fields Properties',
           properties: {
             title: {
               type: 'string',
@@ -98,6 +99,7 @@ const InputBehavior = createBehavior({
             },
           },
         },
+        
 
         'component-styles': {
           type: 'void',
@@ -356,10 +358,10 @@ GlobalRegistry.registerDesignerLocales({
   },
 })
 
-const Logo = () => (
+const Logo: React.FC = () => (
   <div style={{ display: 'flex', alignItems: 'center', fontSize: 14 }}>
     <IconWidget
-      infer='Logo'
+      infer="Logo"
       style={{ margin: 10, height: 24, width: 'auto' }}
     />
   </div>
@@ -377,7 +379,7 @@ const Actions = observer(() => {
     <Space style={{ marginRight: 10 }}>
       <Radio.Group
         value={GlobalRegistry.getDesignerLanguage()}
-        optionType='button'
+        optionType="button"
         options={[
           { label: 'English', value: 'en-us' },
           { label: '简体中文', value: 'zh-cn' },
@@ -387,38 +389,39 @@ const Actions = observer(() => {
           GlobalRegistry.setDesignerLanguage(e.target.value)
         }}
       />
-      <Button href='https://github.com/alibaba/designable' target='_blank'>
+      <Button href="https://github.com/alibaba/designable" target="_blank">
         <GithubOutlined />
         Github
       </Button>
       <Button>保存</Button>
-      <Button type='primary'>发布</Button>
+      <Button type="primary">SAVE</Button>
     </Space>
   )
 })
 
 const engine = createDesigner()
-const FormCreator = () => {
+const FormEditorBasic = () => {
   return (
     <Designer engine={engine}>
       <Workbench>
         <StudioPanel logo={<Logo />} actions={<Actions />}>
           <CompositePanel>
-            <CompositePanel.Item title='panels.Component' icon='Component'>
-              <ResourceWidget title='sources.Inputs' sources={[Input, Card]} />
+            <CompositePanel.Item title="panels.Component" icon="Component">
+              <ResourceWidget title="sources.Inputs" sources={[Input, Card]} />
               <ResourceWidget
-                title='sources.Displays'
+                title="sources.Displays"
                 sources={[Input, Card]}
               />
               <ResourceWidget
-                title='sources.Feedbacks'
+                title="sources.Feedbacks"
                 sources={[Input, Card]}
               />
+              
             </CompositePanel.Item>
-            <CompositePanel.Item title='panels.OutlinedTree' icon='Outline'>
+            <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
               <OutlineTreeWidget />
             </CompositePanel.Item>
-            <CompositePanel.Item title='panels.History' icon='History'>
+            <CompositePanel.Item title="panels.History" icon="History">
               <HistoryWidget />
             </CompositePanel.Item>
           </CompositePanel>
@@ -428,14 +431,14 @@ const FormCreator = () => {
               <ViewToolsWidget />{' '}
             </ToolbarPanel>
             <ViewportPanel>
-              <ViewPanel type='DESIGNABLE'>{() => <Content />}</ViewPanel>
-              <ViewPanel type='JSONTREE'>
+              <ViewPanel type="DESIGNABLE">{() => <Content />}</ViewPanel>
+              <ViewPanel type="JSONTREE">
                 {() => {
                   return (
                     <div style={{ overflow: 'hidden', height: '100%' }}>
                       <MonacoInput
-                        language='javascript'
-                        helpCode='//hello world'
+                        language="javascript"
+                        helpCode="//hello world"
                         defaultValue={`<div><div>123123<div>123123<div>123123<div>123123</div></div></div></div></div>`}
                       />
                     </div>
@@ -444,8 +447,8 @@ const FormCreator = () => {
               </ViewPanel>
             </ViewportPanel>
           </WorkspacePanel>
-          <SettingsPanel title='panels.PropertySettings'>
-            <SettingsForm uploadAction='https://www.mocky.io/v2/5cc8019d300000980a055e76' />
+          <SettingsPanel title="panels.PropertySettings">
+            <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
           </SettingsPanel>
         </StudioPanel>
       </Workbench>
@@ -453,4 +456,4 @@ const FormCreator = () => {
   )
 }
 
-export default FormCreator
+export default FormEditorBasic;

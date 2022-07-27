@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentTreeWidget, useTreeNode } from '@designable/react'
 import { observer } from '@formily/reactive-react'
-import '../node_modules/antd/dist/antd.css'
+import '../../../node_modules/antd/dist/antd.css'
 
 export const Content = () => {
   const node = useTreeNode();
