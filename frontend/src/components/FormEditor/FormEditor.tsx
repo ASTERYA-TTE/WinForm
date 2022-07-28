@@ -1,4 +1,4 @@
-import '../../../../node_modules/antd/dist/antd.less'
+import '../../../node_modules/antd/dist/antd.less'
 import React, { useMemo } from 'react'
 
 import {
@@ -118,9 +118,9 @@ const FormEditor = () => {
     <Designer engine={engine}>
       <StudioPanel logo={<LogoWidget />} actions={<ActionsWidget />}>
         <CompositePanel>
-          <CompositePanel.Item title='panels.Component' icon='Component'>
+          <CompositePanel.Item title="panels.Component" icon="Component">
             <ResourceWidget
-              title='sources.Inputs'
+              title="sources.Inputs"
               sources={[
                 Input,
                 Password,
@@ -141,7 +141,7 @@ const FormEditor = () => {
               ]}
             />
             <ResourceWidget
-              title='sources.Layouts'
+              title="sources.Layouts"
               sources={[
                 Card,
                 FormGrid,
@@ -152,19 +152,19 @@ const FormEditor = () => {
               ]}
             />
             <ResourceWidget
-              title='sources.Arrays'
+              title="sources.Arrays"
               sources={[ArrayCards, ArrayTable]}
             />
-            <ResourceWidget title='sources.Displays' sources={[Text]} />
+            <ResourceWidget title="sources.Displays" sources={[Text]} />
           </CompositePanel.Item>
-          <CompositePanel.Item title='panels.OutlinedTree' icon='Outline'>
+          <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
             <OutlineTreeWidget />
           </CompositePanel.Item>
-          <CompositePanel.Item title='panels.History' icon='History'>
+          <CompositePanel.Item title="panels.History" icon="History">
             <HistoryWidget />
           </CompositePanel.Item>
         </CompositePanel>
-        <Workspace id='form'>
+        <Workspace id="form">
           <WorkspacePanel>
             <ToolbarPanel>
               <DesignerToolsWidget />
@@ -173,7 +173,7 @@ const FormEditor = () => {
               />
             </ToolbarPanel>
             <ViewportPanel style={{ height: '100%' }}>
-              <ViewPanel type='DESIGNABLE'>
+              <ViewPanel type="DESIGNABLE">
                 {() => (
                   <ComponentTreeWidget
                     components={{
@@ -208,26 +208,26 @@ const FormEditor = () => {
                   />
                 )}
               </ViewPanel>
-              <ViewPanel type='JSONTREE' scrollable={false}>
+              <ViewPanel type="JSONTREE" scrollable={false}>
                 {(tree, onChange) => (
                   <SchemaEditorWidget tree={tree} onChange={onChange} />
                 )}
               </ViewPanel>
-              <ViewPanel type='MARKUP' scrollable={false}>
+              <ViewPanel type="MARKUP" scrollable={false}>
                 {(tree) => <MarkupSchemaWidget tree={tree} />}
               </ViewPanel>
-              <ViewPanel type='PREVIEW'>
+              <ViewPanel type="PREVIEW">
                 {(tree) => <PreviewWidget tree={tree} />}
               </ViewPanel>
             </ViewportPanel>
           </WorkspacePanel>
         </Workspace>
-        <SettingsPanel title='panels.PropertySettings'>
-          <SettingsForm uploadAction='https://www.mocky.io/v2/5cc8019d300000980a055e76' />
+        <SettingsPanel title="panels.PropertySettings">
+          <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
         </SettingsPanel>
       </StudioPanel>
     </Designer>
   )
 }
 
-export default FormEditor
+export default FormEditor;

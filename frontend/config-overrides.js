@@ -1,22 +1,23 @@
-export default function override(config, env) {
-  //do stuff with the webpack config...
 
-  config.module.rules[1].oneOf.splice(2, 0, {
-    test: /\.less$/i,
-    exclude: /\.module\.(less)$/,
-    use: [
-      { loader: 'style-loader' },
-      { loader: 'css-loader' },
-      {
-        loader: 'less-loader',
-        options: {
-          lessOptions: {
-            javascriptEnabled: true,
-          },
-        },
-      },
-    ],
-  })
+module.exports = function override(config, env) {
+    //do stuff with the webpack config...
 
-  return config
+    config.module.rules[1].oneOf.splice(2, 0, {
+        test: /\.less$/i,
+        exclude: /\.module\.(less)$/,
+        use: [
+            { loader: "style-loader" },
+            { loader: "css-loader" },
+            {
+            loader: "less-loader",
+            options: {
+                lessOptions: {
+                javascriptEnabled: true,
+                },
+            },
+            },
+        ],
+    })
+
+    return config;
 }
