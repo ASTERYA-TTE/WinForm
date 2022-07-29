@@ -12,10 +12,14 @@ const AppWrapper = () => {
   }, [location])
 
   switch (location.pathname) {
+    case '/':
+      return <Route path='/' component={Login} />
     case '/login':
       return <Route path='/login' component={Login} />
     case '/edit':
       return <Route path='/edit' component={FormCreator} />
+    case '/app':
+      return <Route path='/app' component={App} />
     default:
       return <App />
   }

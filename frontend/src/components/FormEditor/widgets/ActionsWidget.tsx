@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { Space, Button, Radio } from 'antd'
-import { GithubOutlined } from '@ant-design/icons'
 import { useDesigner, TextWidget } from '@designable/react'
 import { GlobalRegistry } from '@designable/core'
 import { observer } from '@formily/react'
@@ -11,33 +10,26 @@ export const ActionsWidget = observer(() => {
   useEffect(() => {
     loadInitialSchema(designer)
   }, [])
-  const supportLocales = ['zh-cn', 'en-us', 'ko-kr']
+  const supportLocales = ['tr-tr', 'en-us']
   useEffect(() => {
     if (!supportLocales.includes(GlobalRegistry.getDesignerLanguage())) {
-      GlobalRegistry.setDesignerLanguage('zh-cn')
+      GlobalRegistry.setDesignerLanguage('en-us')
     }
   }, [])
   return (
     <Space style={{ marginRight: 10 }}>
-      <Button href="https://designable-fusion.formilyjs.org">
-        Alibaba Fusion
-      </Button>
       <Radio.Group
         value={GlobalRegistry.getDesignerLanguage()}
-        optionType="button"
+        optionType='button'
         options={[
+          { label: 'Türkçe', value: 'tr-tr' },
           { label: 'English', value: 'en-us' },
-          { label: '简体中文', value: 'zh-cn' },
-          { label: '한국어', value: 'ko-kr' },
         ]}
         onChange={(e) => {
           GlobalRegistry.setDesignerLanguage(e.target.value)
         }}
       />
-      <Button href="https://github.com/alibaba/designable" target="_blank">
-        <GithubOutlined />
-        Github
-      </Button>
+
       <Button
         onClick={() => {
           saveSchema(designer)
@@ -46,7 +38,7 @@ export const ActionsWidget = observer(() => {
         <TextWidget>Save</TextWidget>
       </Button>
       <Button
-        type="primary"
+        type='primary'
         onClick={() => {
           saveSchema(designer)
         }}
