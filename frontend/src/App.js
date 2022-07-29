@@ -446,6 +446,7 @@ const App = () => {
 
                         return <Route key={`router${index}`} path={router.path} component={router.component} render={router.render} />;
                     })}
+                      <Dashboard />
                 </div>
 
                 <AppFooter />
