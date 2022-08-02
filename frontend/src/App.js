@@ -74,7 +74,7 @@ const App = () => {
     ];
 
     const routers = [
-        { path: "/", component: Dashboard, exact: true, meta: { breadcrumb: [{ parent: "Dashboard", label: "Dashboard" }] } },
+        { path: "/app", component: Dashboard, exact: true, meta: { breadcrumb: [{ parent: "Dashboard", label: "Dashboard" }] } },
         { path: "/formlayout", component: FormLayoutDemo, meta: { breadcrumb: [{ parent: "UI Kit", label: "Form Layout" }] } },
         { path: "/input", component: InputDemo, meta: { breadcrumb: [{ parent: "UI Kit", label: "Input" }] } },
         { path: "/table", component: TableDemo, meta: { breadcrumb: [{ parent: "UI Kit", label: "Table" }] } },
@@ -446,7 +446,7 @@ const App = () => {
 
                         return <Route key={`router${index}`} path={router.path} component={router.component} render={router.render} />;
                     })}
-                      <Dashboard />
+                     
                 </div>
 
                 <AppFooter />
