@@ -514,10 +514,15 @@
   }
 }
 
-.joinBtn:hover {
+.myforms:hover {
   background-color: whitesmoke;
   font-weight: bold;
   display: block;
   cursor: pointer;
   color: #333;
+}
+
+.inputbutton {
+  color: whitesmoke;
+  border: #b8b9c9;
 }

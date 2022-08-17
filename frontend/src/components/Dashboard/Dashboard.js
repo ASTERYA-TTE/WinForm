@@ -1,53 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
+import { Checkbox } from 'primereact/checkbox'
 import './Dashboard.css'
 import { data } from './product'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
-  let history = useHistory()
-  let location = useLocation
-  let emptyProduct = {
-    id: null,
-    name: '',
-    image: null,
-    description: '',
-    category: null,
-    price: 0,
-    quantity: 0,
-    rating: 0,
-    inventoryStatus: 'INSTOCK',
-  }
-  const [product, setProduct] = useState(emptyProduct)
-  const [productDialog, setProductDialog] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState(null)
   const [globalFilter, setGlobalFilter] = useState(null)
+  const [checked, setChecked] = useState(false)
   const toast = useRef(null)
   const dt = useRef(null)
 
-  const editProduct = (product) => {
-    setProduct({ ...product })
-    setProductDialog(true)
-  }
-  const EditButton = (data) => {
-    console.log('historypush', data)
-    history.push('/FormEdit', {
-      state: { FormEditId: data.id },
-    })
-  }
   const rightToolbarTemplate = () => {
     return (
       <div style={{ display: 'flex' }}>
-        <Button
-          className='mr-2'
-          onClick={EditButton}
-          style={{ color: 'white' }}
-        >
-          Form Düzenle
+        <Button className='mr-2' style={{ color: 'white' }}>
+          <Link to='/FormEdit' style={{ color: 'white' }}>
+            {' '}
+            Form Düzenle
+          </Link>
         </Button>
         <Button>
           <Link to='./FormData' style={{ color: 'white' }}>
@@ -60,7 +36,7 @@ const Dashboard = () => {
 
   const header = (
     <div className='table-header'>
-      <h5 className='mx-0 my-1'>Manage Products</h5>
+      <h5 className='mx-0 my-1'>My Forms</h5>
       <span className='p-input-icon-left'>
         <i className='pi pi-search' />
         <InputText
@@ -71,6 +47,18 @@ const Dashboard = () => {
       </span>
     </div>
   )
+
+  const CheckBox = () => {
+    return (
+      <div>
+        <Checkbox
+          inputId='binary'
+          checked={checked}
+          onChange={(e) => setChecked(e.checked)}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className='datatable-crud-demo'>
@@ -93,11 +81,16 @@ const Dashboard = () => {
           responsiveLayout='scroll'
         >
           <Column
+            body={CheckBox}
+            headerStyle={{ width: '3rem' }}
+            exportable={false}
+          ></Column>
+          <Column
             field='name'
             header='Name'
             sortable
             style={{ minWidth: '16rem' }}
-            className='joinBtn link'
+            className='myforms '
           ></Column>
           <Column
             field=''

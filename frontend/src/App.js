@@ -12,14 +12,19 @@ import Dashboard from './components/Dashboard/Dashboard'
 import FormLayoutDemo from './components/FormLayoutDemo'
 import PrimeReact from 'primereact/api'
 import { Tooltip } from 'primereact/tooltip'
+import { Dialog } from 'primereact/dialog'
 import FormData from './components/Dashboard/FormData'
+import CreateNewFolder from './components/Dashboard/CreateNewFolder'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.scss'
-import Modal from './components/CreateNewFolderModal'
 import ProductDetails from './components/Dashboard/ProductDetails'
-
+import { Button } from 'primereact/button'
+import { InputText } from 'primereact/inputtext'
+import './components/Dashboard/Dashboard.css'
+import Favorites from './components/Favorites'
+import Archive from './components/Archive'
 const App = () => {
   const [menuActive, setMenuActive] = useState(false)
   const [menuMode, setMenuMode] = useState('static')
@@ -39,6 +44,7 @@ const App = () => {
   const [ripple, setRipple] = useState(false)
   const [logoColor, setLogoColor] = useState('white')
   const [componentTheme, setComponentTheme] = useState('blue')
+  const [displayResponsive, setDisplayResponsive] = useState(false)
   const [logoUrl, setLogoUrl] = useState('assets/layout/images/logo-dark.svg')
   const copyTooltipRef = useRef()
   const location = useLocation()
@@ -50,6 +56,36 @@ const App = () => {
   let rightMenuClick = false
   let configClick = false
 
+  const dialogFuncMap = {
+    displayResponsive: setDisplayResponsive,
+  }
+
+  const onClick = (name, position) => {
+    dialogFuncMap[`${name}`](true)
+  }
+
+  const onHide = (name) => {
+    dialogFuncMap[`${name}`](false)
+  }
+
+  const renderFooter = (name) => {
+    return (
+      <div>
+        <Button
+          label='No'
+          icon='pi pi-times'
+          onClick={() => onHide(name)}
+          className=' inputbutton'
+        />
+        <Button
+          label='Add'
+          icon='pi pi-check'
+          onClick={() => onHide(name)}
+          autoFocus
+        />
+      </div>
+    )
+  }
   const menu = [
     {
       label: '',
@@ -65,39 +101,22 @@ const App = () => {
       label: 'My Forms',
       icon: 'pi pi-fw pi-home',
       items: [
-        { label: 'All Form', icon: 'pi pi-folder', to: '/all form' },
-        { label: 'New Form', icon: 'pi pi-folder', to: '/new form' },
+        { label: 'All Form', icon: 'pi pi-folder', to: '/app' },
         {
-          label: 'Create New Folder',
+          label: 'CreateNewFolder',
           icon: 'pi pi-plus',
           command: () => {
-            return (
-              <div>
-                <Modal />
-              </div>
-            )
+            onClick('displayResponsive')
           },
         },
       ],
     },
     { separator: true },
     {
-      label: 'Share With Me',
-    },
-    { separator: true },
-    {
-      label: 'Assigned Forms',
-    },
-    { separator: true },
-    {
-      label: 'My Draft',
-    },
-    { separator: true },
-    {
       label: '',
       items: [
-        { label: 'Favorites', icon: 'pi pi-star-fill', to: '/' },
-        { label: 'Archive', icon: 'pi pi-inbox', to: '/' },
+        { label: 'Favorites', icon: 'pi pi-star-fill', to: '/Favorites' },
+        { label: 'Archive', icon: 'pi pi-inbox', to: '/Archive' },
         { label: 'Trash', icon: 'pi pi-trash', to: '/formlayout' },
       ],
     },
@@ -116,12 +135,23 @@ const App = () => {
       meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Form Layout' }] },
     },
     {
-      path: '/modal',
-      component: Modal,
+      path: '/favorites',
+      component: Favorites,
+      meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Favorites' }] },
+    },
+    {
+      path: '/archive',
+      component: Archive,
+      meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Archive' }] },
+    },
+    {
+      path: '/',
+
       meta: { breadcrumb: [{ parent: 'UI Kit', label: ' New Folder' }] },
     },
     { path: '/formdata', component: FormData },
     { path: '/formedit', component: ProductDetails },
+    { path: '/createfolder', component: CreateNewFolder },
   ]
 
   useEffect(() => {
@@ -491,6 +521,29 @@ const App = () => {
       data-theme={colorScheme}
       onClick={onDocumentClick}
     >
+      <Dialog
+        header='Add New Folder'
+        visible={displayResponsive}
+        onHide={() => onHide('displayResponsive')}
+        breakpoints={{ '960px': '75vw' }}
+        style={{ width: '30vw' }}
+        footer={renderFooter('displayResponsive')}
+      >
+        <hr />
+        <br />
+        <div>
+          <h4>
+            <b>Folder Name</b>
+          </h4>
+          <InputText
+            type='text'
+            placeholder='Here  Folder Name'
+            className='p-inputtext-lg block'
+          />
+        </div>
+        <br />
+        <hr />
+      </Dialog>
       <Tooltip
         ref={copyTooltipRef}
         target='.block-action-copy'
