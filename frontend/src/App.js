@@ -9,7 +9,7 @@ import AppSearch from './AppSearch'
 import AppRightMenu from './AppRightMenu'
 import AppBreadcrumb from './AppBreadcrumb'
 import Dashboard from './components/Dashboard/Dashboard'
-import FormLayoutDemo from './components/FormLayoutDemo'
+import FormLayoutDemo from './components/Trash'
 import PrimeReact from 'primereact/api'
 import { Tooltip } from 'primereact/tooltip'
 import { Dialog } from 'primereact/dialog'
@@ -19,12 +19,15 @@ import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.scss'
-import ProductDetails from './components/Dashboard/ProductDetails'
+import FormEdit from './components/Dashboard/FormEdit'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import './components/Dashboard/Dashboard.css'
 import Favorites from './components/Favorites'
 import Archive from './components/Archive'
+import Trash from './components/Trash'
+import CreateNewForm from './components/CreateNewForm'
+import UserLogin from './pages/UserLogin'
 const App = () => {
   const [menuActive, setMenuActive] = useState(false)
   const [menuMode, setMenuMode] = useState('static')
@@ -117,7 +120,7 @@ const App = () => {
       items: [
         { label: 'Favorites', icon: 'pi pi-star-fill', to: '/Favorites' },
         { label: 'Archive', icon: 'pi pi-inbox', to: '/Archive' },
-        { label: 'Trash', icon: 'pi pi-trash', to: '/formlayout' },
+        { label: 'Trash', icon: 'pi pi-trash', to: '/Trash' },
       ],
     },
   ]
@@ -127,12 +130,12 @@ const App = () => {
       path: '/app',
       component: Dashboard,
       exact: true,
-      meta: { breadcrumb: [{ parent: 'Dashboard', label: 'Dashboard' }] },
+      meta: { breadcrumb: [{ parent: 'Dashboard', label: 'All Forms' }] },
     },
     {
-      path: '/formlayout',
-      component: FormLayoutDemo,
-      meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Form Layout' }] },
+      path: '/Trash',
+      component: Trash,
+      meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Trash' }] },
     },
     {
       path: '/favorites',
@@ -144,14 +147,10 @@ const App = () => {
       component: Archive,
       meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Archive' }] },
     },
-    {
-      path: '/',
-
-      meta: { breadcrumb: [{ parent: 'UI Kit', label: ' New Folder' }] },
-    },
     { path: '/formdata', component: FormData },
-    { path: '/formedit', component: ProductDetails },
+    { path: '/formedit', component: FormEdit },
     { path: '/createfolder', component: CreateNewFolder },
+    { path: '/createform', component: CreateNewForm },
   ]
 
   useEffect(() => {
@@ -520,6 +519,7 @@ const App = () => {
       className={containerClassName}
       data-theme={colorScheme}
       onClick={onDocumentClick}
+      style={{ resize: 'both' }}
     >
       <Dialog
         header='Add New Folder'
@@ -539,6 +539,7 @@ const App = () => {
             type='text'
             placeholder='Here  Folder Name'
             className='p-inputtext-lg block'
+            style={{ width: '100%' }}
           />
         </div>
         <br />
@@ -571,7 +572,10 @@ const App = () => {
           onRootMenuitemClick={onRootMenuitemClick}
         ></AppTopbar>
 
-        <div className='layout-content'>
+        <div
+          className='layout-content'
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
+        >
           <div
             className='layout-breadcrumb viewname'
             style={{ textTransform: 'uppercase' }}

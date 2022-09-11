@@ -48,41 +48,6 @@ const AppTopbar = (props) => {
           src='assets/layout/images/logo-dark.svg'
           alt='diamond-layout'
         />
-        <div
-          style={{ display: 'flex', marginLeft: '700px', maxWidth: '850px' }}
-        >
-          <Link to=''>
-            <button
-              type='button'
-              style={{
-                backgroundColor: '#fff',
-                border: ' #d8dae9',
-                borderRadius: '4px',
-                color: '#0a1551',
-                fontSize: '14px',
-                fontWeight: '600',
-                lineHeight: '1.125rem',
-                minHeight: '44px',
-                outline: 'none',
-                padding: '12px',
-              }}
-            >
-              <span>Title [a-z]</span>
-            </button>
-          </Link>
-          <input
-            type='text'
-            placeholder='Search in My Forms'
-            style={{
-              backgroundColor: '#f3f3fe',
-              border: '#f3f3fe',
-              flex: '1 1',
-              margin: '0 12px 0 8px',
-              minWidth: '240px',
-              position: 'relative',
-            }}
-          />
-        </div>
       </div>
 
       <AppMenu

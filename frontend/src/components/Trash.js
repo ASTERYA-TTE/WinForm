@@ -1,8 +1,8 @@
 import { Button } from 'primereact/button'
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-function Archive() {
+import './Dashboard/Dashboard.css'
+function Trash() {
   return (
     <div>
       <Button className='backbutton p-0'>
@@ -16,4 +16,4 @@ function Archive() {
   )
 }
 
-export default Archive
+export default Trash

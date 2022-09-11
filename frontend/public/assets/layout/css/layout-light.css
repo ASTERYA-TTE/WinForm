@@ -4349,11 +4349,32 @@ a {
   .login-body .login-wrapper .login-panel {
     width: 100%;
     z-index: 2;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .login-body .login-wrapper .login-image {
     display: none;
   }
 }
+
+@media (min-width: 993px) {
+  .login-panel-mobil {
+    display: none;
+  }
+}
+
+@media (max-width: 993px) {
+  .create-form-destop {
+    display: none;
+  }
+}
+
+@media (min-width: 993px) {
+  .create-form-mobil {
+    display: none;
+  }
+}
+
 .invoice {
   padding: 2rem;
 }

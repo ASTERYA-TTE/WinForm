@@ -6,7 +6,7 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import './Dashboard.css'
-import { data } from './product'
+import { data } from './formdatas'
 import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
@@ -19,17 +19,30 @@ const Dashboard = () => {
   const rightToolbarTemplate = () => {
     return (
       <div style={{ display: 'flex' }}>
-        <Button className='mr-2' style={{ color: 'white' }}>
-          <Link to='/FormEdit' style={{ color: 'white' }}>
-            {' '}
-            Form Düzenle
-          </Link>
-        </Button>
-        <Button>
-          <Link to='./FormData' style={{ color: 'white' }}>
-            Form Verileri
-          </Link>
-        </Button>
+        <div className='button-demo'>
+          <div className='template'>
+            <Button className='formedit p-1 p-button-rounded mr-2'>
+              <span className='px-3'>
+                <Link to='./FormData' style={{ color: 'white' }}>
+                  <i className='pi pi-pencil'></i>
+                </Link>
+              </span>
+            </Button>
+          </div>
+        </div>
+
+        <div className='button-demo'>
+          <div className='template'>
+            <Button className='formdata p-1 p-button-rounded'>
+              <span className='px-3'>
+                <Link to='./FormData' style={{ color: 'white' }}>
+                  {' '}
+                  <i className='pi pi-database'></i>
+                </Link>
+              </span>
+            </Button>
+          </div>
+        </div>
       </div>
     )
   }
@@ -89,7 +102,7 @@ const Dashboard = () => {
             field='name'
             header='Name'
             sortable
-            style={{ minWidth: '16rem' }}
+            style={{ minWidth: 'auto' }}
             className='myforms '
           ></Column>
           <Column
@@ -97,14 +110,13 @@ const Dashboard = () => {
             header='Status'
             body=''
             sortable
-            style={{ minWidth: '70rem' }}
+            style={{ minWidth: '' }}
           ></Column>
 
           <Column
-            header='Edit'
             className='link'
             body={rightToolbarTemplate}
-            style={{ minWidth: '30rem' }}
+            style={{ float: 'right' }}
           ></Column>
         </DataTable>
       </div>

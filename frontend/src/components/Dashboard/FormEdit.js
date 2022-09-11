@@ -1,8 +1,9 @@
 import { Button } from 'primereact/button'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './Dashboard.css'
 
-function Archive() {
+function FormEdit() {
   return (
     <div>
       <Button className='backbutton p-0'>
@@ -16,4 +17,4 @@ function Archive() {
   )
 }
 
-export default Archive
+export default FormEdit

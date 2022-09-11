@@ -45,6 +45,19 @@ export const ActionsWidget = observer(() => {
       >
         <TextWidget>Publish</TextWidget>
       </Button>
+      <Button
+        type='primary'
+        onClick={() => {
+          window.location.href = '/app#/app'
+        }}
+        style={{
+          backgroundColor: 'white',
+          border: 'none',
+          color: '#1976d2 ',
+        }}
+      >
+        <TextWidget>BackToDashboard</TextWidget>
+      </Button>
     </Space>
   )
 })

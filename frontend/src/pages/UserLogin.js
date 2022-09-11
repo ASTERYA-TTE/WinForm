@@ -4,7 +4,7 @@ import { Password } from 'primereact/password'
 import { Button } from 'primereact/button'
 import { Link } from 'react-router-dom'
 
-export const Login = () => {
+const UserLogin = () => {
   return (
     <div className='login-body'>
       <div className='login-wrapper'>
@@ -25,10 +25,7 @@ export const Login = () => {
           <div className='image-footer'>
             <p>Winform</p>
             <div className='icons'>
-              <a href='http://github.com/ASTERYA-TTE/WinForm/tree/main/frontend'>
-                <i className='pi pi-github'></i>
-              </a>
-
+              <i className='pi pi-github'></i>
               <i className='pi pi-twitter'></i>
             </div>
           </div>
@@ -38,11 +35,7 @@ export const Login = () => {
             <div className='login-panel-mobil'>
               <h3 style={{ marginTop: '-300px' }}>Winform</h3>
             </div>
-
-            <p>
-              Already have an account? <a href='/#/userlogin'>Login</a>
-            </p>
-            <InputText placeholder='Full Name' />
+            <p style={{ color: ' #1976d2' }}>Login</p>
             <InputText placeholder='Email' />
             <Password placeholder='Password' />
             <Link to='/app'>
@@ -57,3 +50,5 @@ export const Login = () => {
     </div>
   )
 }
+
+export default UserLogin
