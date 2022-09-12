@@ -111,11 +111,7 @@ const Dashboard = () => {
             sortable
             style={{ minWidth: '' }}
           ></Column>
-          <Column
-            header='Status'
-            className='link'
-            body={rightToolbarTemplate}
-          ></Column>
+          <Column className='link' body={rightToolbarTemplate}></Column>
         </DataTable>
       </div>
     </div>
