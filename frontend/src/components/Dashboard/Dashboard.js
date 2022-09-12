@@ -18,19 +18,18 @@ const Dashboard = () => {
 
   const rightToolbarTemplate = () => {
     return (
-      <div style={{ display: 'flex' }}>
-        <div className='button-demo'>
+      <div style={{ display: 'flex', float: 'right' }}>
+        <div className='button-demo mr-2'>
           <div className='template'>
-            <Button className='formedit p-1 p-button-rounded mr-2'>
-              <span className='px-3'>
-                <Link to='./FormData' style={{ color: 'white' }}>
+            <Button className='formedit p-1 p-button-rounded '>
+              <Link to='./FormData' style={{ color: 'white' }}>
+                <span className='px-3'>
                   <i className='pi pi-pencil'></i>
-                </Link>
-              </span>
+                </span>
+              </Link>
             </Button>
           </div>
         </div>
-
         <div className='button-demo'>
           <div className='template'>
             <Button className='formdata p-1 p-button-rounded'>
@@ -112,11 +111,10 @@ const Dashboard = () => {
             sortable
             style={{ minWidth: '' }}
           ></Column>
-
           <Column
+            header='Status'
             className='link'
             body={rightToolbarTemplate}
-            style={{ float: 'right' }}
           ></Column>
         </DataTable>
       </div>
