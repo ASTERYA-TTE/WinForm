@@ -91,10 +91,28 @@ const AppMenu = (props) => {
           setFolderName('')
           setShowFolderDialog(false)
           setParentFolderId(null)
+          getFolders(null)
           toast.current.show({severity:'success', summary: 'Klasör Oluşturuldu', detail:'Klasör Oluşturuldu', life: 3000});
     
         }
       }
+
+    const renderFolderDialogFooter = () => {
+        return <div>
+                <Button
+                label='No'
+                icon='pi pi-times'
+                onClick={() => setShowFolderDialog(false)}
+                className=' inputbutton'
+                />
+                <Button
+                label='Add'
+                icon='pi pi-check'
+                onClick={() => createNewFolder()}
+                autoFocus
+                />
+            </div>
+    }
 
     return (
         <div className="layout-sidebar" onClick={props.onMenuClick}>
@@ -106,7 +124,7 @@ const AppMenu = (props) => {
                 onHide={() => setShowFolderDialog(false)}
                 breakpoints={{ '960px': '75vw' }}
                 style={{ width: '30vw' }}
-                
+                footer={renderFolderDialogFooter}
             >
                 <hr />
                 <br />
@@ -125,20 +143,7 @@ const AppMenu = (props) => {
                 </div>
                 <br />
                 <hr />
-                <div>
-                <Button
-                label='No'
-                icon='pi pi-times'
-                onClick={() => setShowFolderDialog(false)}
-                className=' inputbutton'
-                />
-                <Button
-                label='Add'
-                icon='pi pi-check'
-                onClick={() => createNewFolder()}
-                autoFocus
-                />
-            </div>
+                
             </Dialog>
 
             <Link to="/" className="logo">
@@ -148,6 +153,7 @@ const AppMenu = (props) => {
             <div className="layout-menu-container">
                 <span>FOLDERS</span>
                 <Divider />
+                <Button label="Create New Folder" className="p-button-text" onClick={() => {setParentFolderId(null); setShowFolderDialog(true)}}/>
                 <Tree value={folders} nodeTemplate={folderTreeNodeTemplate} onExpand={loadOnExpand} 
                     loading={loading}
                     selectionMode="single" 
