@@ -56,7 +56,7 @@ export const ActionsWidget = observer(() => {
           color: '#1976d2 ',
         }}
       >
-        <TextWidget>BackToDashboard</TextWidget>
+        <TextWidget>Dashboard</TextWidget>
       </Button>
     </Space>
   )

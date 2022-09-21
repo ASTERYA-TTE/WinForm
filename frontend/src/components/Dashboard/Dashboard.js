@@ -21,25 +21,25 @@ const Dashboard = () => {
       <div style={{ display: 'flex', float: 'right' }}>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Button className='formedit p-1 p-button-rounded '>
-              <Link to='./FormData' style={{ color: 'white' }}>
+            <Link to='./FormEdit' style={{ color: 'white' }}>
+              <Button className='formedit p-1 p-button-rounded '>
                 <span className='px-3'>
                   <i className='pi pi-pencil'></i>
                 </span>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
         <div className='button-demo'>
           <div className='template'>
-            <Button className='formdata p-1 p-button-rounded'>
-              <span className='px-3'>
-                <Link to='./FormData' style={{ color: 'white' }}>
+            <Link to='./FormData' style={{ color: 'white' }}>
+              <Button className='formdata p-1 p-button-rounded'>
+                <span className='px-3'>
                   {' '}
                   <i className='pi pi-database'></i>
-                </Link>
-              </span>
-            </Button>
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
