@@ -1,0 +1,3 @@
+Backend uygulaması için gerekli db ayağa kaldırılır.
+
+docker stack deploy -c stack.yml WinForm
