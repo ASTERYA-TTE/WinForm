@@ -1,0 +1,14 @@
+version: '3'
+services:
+  database:
+    image: 'mongo:3.6.22'
+    container_name: 'winform-mongo'
+    environment:
+      - MONGO_INITDB_DATABASE=winform
+      - MONGO_INITDB_ROOT_USERNAME=winform
+      - MONGO_INITDB_ROOT_PASSWORD=winform123
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+    ports:
+    - '27017-27019:27017-27019'
