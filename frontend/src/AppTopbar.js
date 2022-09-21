@@ -186,15 +186,6 @@ const AppTopbar = (props) => {
             </ul>
           </li>
 
-          <li className='right-sidebar-item'>
-            <button
-              type='button'
-              className='p-link'
-              onClick={props.onRightMenuButtonClick}
-            >
-              <i className='pi pi-align-right'></i>
-            </button>
-          </li>
         </ul>
       </div>
     </div>

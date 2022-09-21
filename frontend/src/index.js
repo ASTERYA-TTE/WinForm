@@ -3,8 +3,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter } from "react-router-dom";
 import AppWrapper from "./AppWrapper";
-
+import axios from 'axios'
 //import reportWebVitals from './reportWebVitals';
+
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_ADDRESS;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
 ReactDOM.render(
     <HashRouter>

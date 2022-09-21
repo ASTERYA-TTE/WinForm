@@ -16,7 +16,8 @@ exports.create = (req,res) => {
 }
 
 exports.list =  (req,res) => {
-    getDb().collection(collection_name).find({parent_id: req.body.parent_folder_id}).toArray(function(err, result) {
+    const parent_id =  req.body.parent_folder_id == null ? null : ObjectId(req.body.parent_folder_id) 
+    getDb().collection(collection_name).find({parent_id: parent_id}).toArray(function(err, result) {
       if (err) throw err;
       res.send(result);
     });
