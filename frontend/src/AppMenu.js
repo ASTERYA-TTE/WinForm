@@ -127,7 +127,8 @@ const AppMenu = (props) => {
           label='No'
           icon='pi pi-times'
           onClick={() => setShowFolderDialog(false)}
-          className=' inputbutton'
+          className=' inputbutton p-button-raised p-button-plain p-button-text'
+          style={{ float: 'left' }}
         />
         <Button
           label='Add'
