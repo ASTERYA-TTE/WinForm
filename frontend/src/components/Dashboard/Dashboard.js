@@ -1,18 +1,25 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
+import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
 import { data } from './formdatas'
 import { Link } from 'react-router-dom'
+import FormService from '../../services/formService'
 
 const Dashboard = () => {
-  const [selectedProducts, setSelectedProducts] = useState(null)
+  const [selectedForms, setSelectedForms] = useState(null)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [checked, setChecked] = useState(false)
+  const [forms, setForms] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [showFormDialog, setShowFormDialog] = useState(false)
+  const [parentFormId, setParentFormId] = useState(null)
+  const [formName, setFormName] = useState('')
   const toast = useRef(null)
   const dt = useRef(null)
 
@@ -67,21 +74,127 @@ const Dashboard = () => {
           inputId='binary'
           checked={checked}
           onChange={(e) => setChecked(e.checked)}
+          selectionMode='single'
         />
       </div>
     )
   }
 
+  const getForms = async (formId) => {
+    const params = {
+      parent_form_id: formId,
+    }
+    const response = await FormService.listForms(params)
+
+    const treeNodes = response.data.map((form) => {
+      return {
+        key: form._id,
+        label: form.title,
+        leaf: false,
+      }
+    })
+
+    setForms(treeNodes)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getForms(null)
+  }, [])
+
+  const createNewForm = async () => {
+    const params = {
+      title: formName,
+      parent_id: parentFormId,
+    }
+    const response = await FormService.createForms(params)
+    if (response.error) {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Klasör Oluşturulamadı',
+        detail: 'Klasör oluşturulamadı! Lütfen daha sonra tekrar deneyiziniz.',
+        life: 3000,
+      })
+    } else {
+      setFormName('')
+      setShowFormDialog(false)
+      setParentFormId(null)
+      getForms(null)
+      toast.current.show({
+        severity: 'success',
+        summary: 'Klasör Oluşturuldu',
+        detail: 'Klasör Oluşturuldu',
+        life: 3000,
+      })
+    }
+  }
+
+  const renderFormDialogFooter = () => {
+    return (
+      <div>
+        <Button
+          label='No'
+          icon='pi pi-times'
+          onClick={() => setShowFormDialog(false)}
+          className=' inputbutton p-button-raised p-button-plain p-button-text'
+          style={{ float: 'left' }}
+        />
+        <Button
+          label='Add'
+          icon='pi pi-check'
+          onClick={() => createNewForm()}
+          autoFocus
+        />
+      </div>
+    )
+  }
   return (
     <div className='datatable-crud-demo'>
       <Toast ref={toast} />
-
-      <div className='card'>
+      <div>
+        <Dialog
+          header='Add New Form'
+          visible={showFormDialog}
+          onHide={() => setShowFormDialog(false)}
+          breakpoints={{ '960px': '75vw' }}
+          style={{ width: '30vw' }}
+          footer={renderFormDialogFooter}
+        >
+          <hr />
+          <br />
+          <div>
+            <h4>
+              <b>Form Name</b>
+            </h4>
+            <InputText
+              type='text'
+              value={formName}
+              placeholder='Here Form Name'
+              className='p-inputtext-lg block'
+              style={{ width: '100%' }}
+              onChange={(e) => setFormName(e.target.value)}
+            />
+          </div>
+          <br />
+          <hr />
+        </Dialog>
+        <Button
+          label='Create New Form'
+          className='p-button-text p-button-raised'
+          onClick={() => {
+            setParentFormId(null)
+            setShowFormDialog(true)
+          }}
+          style={{ float: 'right', marginTop: '-40px' }}
+        />
+      </div>
+      <div className='card mt-5'>
         <DataTable
           ref={dt}
-          value={data}
-          selection={selectedProducts}
-          onSelectionChange={(e) => setSelectedProducts(e.value)}
+          value={forms}
+          selection={selectedForms}
+          loading={loading}
+          onSelectionChange={(e) => setSelectedForms(e.value)}
           dataKey='id'
           paginator
           rows={10}
@@ -98,7 +211,7 @@ const Dashboard = () => {
             exportable={false}
           ></Column>
           <Column
-            field='name'
+            field='label'
             header='Name'
             sortable
             style={{ minWidth: 'auto' }}
@@ -107,7 +220,7 @@ const Dashboard = () => {
           <Column
             field=''
             header='Status'
-            body=''
+            body='New Create'
             sortable
             style={{ minWidth: '' }}
           ></Column>
