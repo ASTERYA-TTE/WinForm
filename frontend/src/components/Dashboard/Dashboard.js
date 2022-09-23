@@ -95,9 +95,10 @@ const Dashboard = (props) => {
   }, [props.history.location.state])
 
   const createNewForm = async () => {
+
     const params = {
       title: formName,
-      folder_id: props.history.location.state.folderId,
+      folder_id: props.history.location.state ? props.history.location.state.folderId : null,
     }
     const response = await FormService.createForms(params)
     if (response.error) {
