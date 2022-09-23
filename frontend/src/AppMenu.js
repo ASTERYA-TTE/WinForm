@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Tree } from 'primereact/tree'
 import FolderService from './services/folderService'
@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
 
 const AppMenu = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const [folders, setFolders] = useState([])
   const [loading, setLoading] = useState(true)
@@ -46,10 +46,13 @@ const AppMenu = (props) => {
     let label = <b>{node.label}</b>
 
     return (
-      <span className={options.className}>
+      <span
+        className={options.className}
+        style={{ display: 'flex', position: 'inherit' }}
+      >
         {label}
         <Button
-          className='p-button-rounded p-button-text -mt-6'
+          className='p-button-rounded p-button-text -mt-6 px-2'
           aria-label='Submit'
           onClick={() => {
             setShowFolderDialog(true)
@@ -57,8 +60,8 @@ const AppMenu = (props) => {
           }}
         />
         <i
-          className='pi pi-plus'
-          style={{ color: 'blue', float: 'right', marginTop: '-20px' }}
+          className='pi pi-plus mt-1 '
+          style={{ marginLeft: '-10px' }}
           onClick={() => {
             setShowFolderDialog(true)
             setParentFolderId(node.key)
@@ -144,8 +147,8 @@ const AppMenu = (props) => {
   }
 
   const folderTreeSelect = (e) => {
-    setSelectedKey(e.value);
-    history.push('/app', {folderId:selectedKey})
+    setSelectedKey(e.value)
+    history.push('/app', { folderId: selectedKey })
   }
 
   return (
@@ -201,7 +204,10 @@ const AppMenu = (props) => {
           selectionMode='single'
           selectionKeys={selectedKey}
           onSelectionChange={(e) => folderTreeSelect(e)}
-          style={{ backgroundColor: 'transparent', color: 'white' }}
+          style={{
+            backgroundColor: 'transparent',
+            color: 'white',
+          }}
         />
       </div>
     </div>

@@ -85,20 +85,23 @@ const Dashboard = (props) => {
       folder_id: folderId,
     }
     const response = await FormService.listForms(params)
-  
+
     setForms(response.data)
     setLoading(false)
   }
 
   useEffect(() => {
-    getForms(props.history.location.state ? props.history.location.state.folderId : null);
+    getForms(
+      props.history.location.state
+        ? props.history.location.state.folderId
+        : null
+    )
   }, [props.history.location.state])
 
   const createNewForm = async () => {
-
     const params = {
       title: formName,
-      folder_id: props.history.location.state ? props.history.location.state.folderId : null,
+      folder_id: props.history.location.state.folderId,
     }
     const response = await FormService.createForms(params)
     if (response.error) {
@@ -170,15 +173,22 @@ const Dashboard = (props) => {
           <br />
           <hr />
         </Dialog>
-        <Button
-          label='Create New Form'
-          className='p-button-text p-button-raised'
-          onClick={() => {
-            setParentFormId(null)
-            setShowFormDialog(true)
-          }}
-          style={{ float: 'right', marginTop: '-40px' }}
-        />
+        <div style={{ display: 'flex', float: 'right' }} className='-mt-6'>
+          <Link to='/edit'>
+            <Button
+              label='Form Template'
+              className='p-button-raised  mr-2  p-button-text  p-button-success '
+            />
+          </Link>
+          <Button
+            label='Create New Form'
+            className='p-button-text p-button-raised'
+            onClick={() => {
+              setParentFormId(null)
+              setShowFormDialog(true)
+            }}
+          />
+        </div>
       </div>
       <div className='card mt-5'>
         <DataTable
