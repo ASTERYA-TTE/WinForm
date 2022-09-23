@@ -91,7 +91,7 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    getForms(props.history.location.state.folderId);
+    getForms(props.history.location.state ? props.history.location.state.folderId : null);
   }, [props.history.location.state])
 
   const createNewForm = async () => {
