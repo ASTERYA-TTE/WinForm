@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import { Tree } from 'primereact/tree'
 import FolderService from './services/folderService'
@@ -9,6 +10,8 @@ import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
 
 const AppMenu = (props) => {
+  const history = useHistory();
+
   const [folders, setFolders] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedKey, setSelectedKey] = useState(null)
@@ -140,6 +143,11 @@ const AppMenu = (props) => {
     )
   }
 
+  const folderTreeSelect = (e) => {
+    setSelectedKey(e.value);
+    history.push('/app', {folderId:selectedKey})
+  }
+
   return (
     <div className='layout-sidebar' onClick={props.onMenuClick}>
       <Toast ref={toast} />
@@ -192,7 +200,7 @@ const AppMenu = (props) => {
           loading={loading}
           selectionMode='single'
           selectionKeys={selectedKey}
-          onSelectionChange={(e) => setSelectedKey(e.value)}
+          onSelectionChange={(e) => folderTreeSelect(e)}
           style={{ backgroundColor: 'transparent', color: 'white' }}
         />
       </div>

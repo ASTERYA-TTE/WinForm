@@ -1,7 +1,7 @@
 import "react-app-polyfill/ie11";
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppWrapper from "./AppWrapper";
 import axios from 'axios'
 //import reportWebVitals from './reportWebVitals';
@@ -11,9 +11,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
 ReactDOM.render(
-    <HashRouter>
+    <BrowserRouter>
         <AppWrapper />
-    </HashRouter>,
+    </BrowserRouter>,
     document.getElementById("root")
 );
 

@@ -13,7 +13,6 @@ import './App.scss'
 import './components/Dashboard/Dashboard.css'
 import routers from './routes'
 
-import FolderService from './services/folderService';
 
 const App = () => {
   const [menuActive, setMenuActive] = useState(false)

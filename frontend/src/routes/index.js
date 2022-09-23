@@ -14,7 +14,7 @@ const routers = [
       meta: { breadcrumb: [{ parent: 'Dashboard', label: 'All Forms' }] },
     },
     {
-      path: '/Trash',
+      path: '/trash',
       component: Trash,
       meta: { breadcrumb: [{ parent: 'UI Kit', label: 'Trash' }] },
     },

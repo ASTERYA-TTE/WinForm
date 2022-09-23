@@ -40,7 +40,7 @@ export const Login = () => {
             </div>
 
             <p>
-              Already have an account? <a href='/#/userlogin'>Login</a>
+              Already have an account? <a href='/userlogin'>Login</a>
             </p>
             <InputText placeholder='Full Name' />
             <InputText placeholder='Email' />

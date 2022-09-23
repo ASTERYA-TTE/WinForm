@@ -11,7 +11,7 @@ import { data } from './formdatas'
 import { Link } from 'react-router-dom'
 import FormService from '../../services/formService'
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [selectedForms, setSelectedForms] = useState(null)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [checked, setChecked] = useState(false)
@@ -80,32 +80,24 @@ const Dashboard = () => {
     )
   }
 
-  const getForms = async (formId) => {
+  const getForms = async (folderId) => {
     const params = {
-      parent_form_id: formId,
+      folder_id: folderId,
     }
     const response = await FormService.listForms(params)
-
-    const treeNodes = response.data.map((form) => {
-      return {
-        key: form._id,
-        label: form.title,
-        leaf: false,
-      }
-    })
-
-    setForms(treeNodes)
+  
+    setForms(response.data)
     setLoading(false)
   }
 
   useEffect(() => {
-    getForms(null)
-  }, [])
+    getForms(props.history.location.state.folderId);
+  }, [props.history.location.state])
 
   const createNewForm = async () => {
     const params = {
       title: formName,
-      parent_id: parentFormId,
+      folder_id: props.history.location.state.folderId,
     }
     const response = await FormService.createForms(params)
     if (response.error) {
@@ -118,8 +110,7 @@ const Dashboard = () => {
     } else {
       setFormName('')
       setShowFormDialog(false)
-      setParentFormId(null)
-      getForms(null)
+      getForms(props.history.location.state.folderId)
       toast.current.show({
         severity: 'success',
         summary: 'Klasör Oluşturuldu',
@@ -211,7 +202,7 @@ const Dashboard = () => {
             exportable={false}
           ></Column>
           <Column
-            field='label'
+            field='title'
             header='Name'
             sortable
             style={{ minWidth: 'auto' }}
