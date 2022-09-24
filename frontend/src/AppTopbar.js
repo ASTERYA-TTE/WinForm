@@ -1,9 +1,7 @@
 import React from 'react'
 import { classNames } from 'primereact/utils'
 import { Link } from 'react-router-dom'
-import AppBreadcrumb from './AppBreadcrumb'
 import AppMenu from './AppMenu'
-import './components/Dashboard/Dashboard.css'
 
 const AppTopbar = (props) => {
   const notificationsItemClassName = classNames('notifications-item', {
@@ -30,7 +28,6 @@ const AppTopbar = (props) => {
           className='layout-breadcrumb viewname'
           style={{ textTransform: 'uppercase', width: '100%' }}
         >
-          <AppBreadcrumb routers={props.routers} />
         </div>
       </div>
 

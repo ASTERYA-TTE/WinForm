@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
 
 const AppMenu = (props) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const [folders, setFolders] = useState([])
   const [loading, setLoading] = useState(true)
@@ -148,7 +148,7 @@ const AppMenu = (props) => {
 
   const folderTreeSelect = (e) => {
     setSelectedKey(e.value)
-    history.push('/app', { folderId: selectedKey })
+    navigate({to:'/', options:{ state: {folderId: selectedKey} }})
   }
 
   return (

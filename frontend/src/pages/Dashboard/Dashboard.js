@@ -7,10 +7,12 @@ import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
-import { Link } from 'react-router-dom'
+import { Link,useLocation,useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 
 const Dashboard = (props) => {
+  const location = useLocation()
+  const navigation = useNavigation()
   const [selectedForms, setSelectedForms] = useState(null)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [checked, setChecked] = useState(false)
@@ -100,18 +102,21 @@ const Dashboard = (props) => {
     setLoading(false)
   }
 
+  useEffect(() => {console.log('Daashboard useEffect Navigation',navigation)}, [navigation.state])
+
   useEffect(() => {
+    console.log('Dashboard use effect calisti', location)
     getForms(
-      props.history.location.state
-        ? props.history.location.state.folderId
+      location.state
+        ? location.state.folderId
         : null
     )
-  }, [props.history.location.state])
+  }, [location.state])
 
   const createNewForm = async () => {
     const params = {
       title: formName,
-      folder_id: props.history.location.state.folderId,
+      folder_id: location.state.folderId,
     }
     const response = await FormService.createForms(params)
     if (response.error) {
@@ -124,7 +129,7 @@ const Dashboard = (props) => {
     } else {
       setFormName('')
       setShowFormDialog(false)
-      getForms(props.history.location.state.folderId)
+      getForms(location.state.folderId)
       toast.current.show({
         severity: 'success',
         summary: 'Form Oluşturuldu',

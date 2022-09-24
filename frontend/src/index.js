@@ -1,18 +1,41 @@
 import 'react-app-polyfill/ie11'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
-import AppWrapper from './AppWrapper'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import App from './App'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard/Dashboard';
 import axios from 'axios'
-//import reportWebVitals from './reportWebVitals';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_ADDRESS
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children:[
+      {
+        path:'/',
+        element: <Dashboard />
+      }
+    ]
+  },
+  {
+    path: 'login',
+    element: <Login />,
+  },
+])
+
 ReactDOM.render(
-  <BrowserRouter>
-    <AppWrapper />
-  </BrowserRouter>,
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
   document.getElementById('root')
 )
 

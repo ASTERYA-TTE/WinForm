@@ -10,9 +10,10 @@ import { Login } from './pages/Login'
 import FormCreator from './components/FormEditor/FormEditor'
 import UserLogin from './pages/UserLogin'
 const AppWrapper = () => {
+
   const router = createBrowserRouter([
     {
-      path: 'app',
+      path: '/',
       element: <App />,
     },
     {
@@ -20,6 +21,7 @@ const AppWrapper = () => {
       element: <Login />,
     },
   ])
+
   return (
     <div>
       {/* {router} */}

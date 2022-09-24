@@ -4,7 +4,7 @@ import { Password } from 'primereact/password'
 import { Button } from 'primereact/button'
 import { Link } from 'react-router-dom'
 
-export const Login = () => {
+const Login = () => {
   return (
     <div className='login-body'>
       <div className='login-wrapper'>
@@ -57,3 +57,5 @@ export const Login = () => {
     </div>
   )
 }
+
+export default Login

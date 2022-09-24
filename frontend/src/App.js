@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { classNames } from 'primereact/utils'
-import { Route, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import AppTopbar from './AppTopbar'
 import AppFooter from './AppFooter'
 import AppSearch from './AppSearch'
-import AppBreadcrumb from './AppBreadcrumb'
 import { Tooltip } from 'primereact/tooltip'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.scss'
-import './components/Dashboard/Dashboard.css'
 import routers from './routes'
 
 const App = () => {
@@ -288,7 +286,6 @@ const App = () => {
             className='layout-breadcrumb viewname'
             style={{ textTransform: 'uppercase' }}
           >
-            <AppBreadcrumb routers={routers} />
           </div>
 
           {/* {routers.map((router, index) => {
@@ -313,6 +310,7 @@ const App = () => {
               />
             )
           })} */}
+           <Outlet />
         </div>
 
         <AppFooter />
