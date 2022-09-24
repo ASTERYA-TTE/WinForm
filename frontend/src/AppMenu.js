@@ -148,7 +148,8 @@ const AppMenu = (props) => {
 
   const folderTreeSelect = (e) => {
     setSelectedKey(e.value)
-    navigate({to:'/', options:{ state: {folderId: selectedKey} }})
+    //navigate({to:'/', options:{ state: {folderId: selectedKey} }})
+    navigate('/', { state: { folderId: selectedKey } })
   }
 
   return (
