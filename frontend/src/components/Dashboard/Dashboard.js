@@ -7,7 +7,6 @@ import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
-import { data } from './formdatas'
 import { Link } from 'react-router-dom'
 import FormService from '../../services/formService'
 
@@ -18,7 +17,6 @@ const Dashboard = (props) => {
   const [forms, setForms] = useState([])
   const [loading, setLoading] = useState(true)
   const [showFormDialog, setShowFormDialog] = useState(false)
-  const [parentFormId, setParentFormId] = useState(null)
   const [formName, setFormName] = useState('')
   const toast = useRef(null)
   const dt = useRef(null)
@@ -37,7 +35,7 @@ const Dashboard = (props) => {
             </Link>
           </div>
         </div>
-        <div className='button-demo'>
+        <div className='button-demo mr-2'>
           <div className='template'>
             <Link to='./FormData' style={{ color: 'white' }}>
               <Button className='formdata p-1 p-button-rounded'>
@@ -49,10 +47,22 @@ const Dashboard = (props) => {
             </Link>
           </div>
         </div>
+        <div className='button-demo mr-2'>
+          <div className='template'>
+            <Link to='/edit'>
+              <Button className='formdata p-1 p-button-rounded'>
+                <span className='px-3'>
+                  {' '}
+                  <i className='pi pi-file-edit'></i>
+                </span>
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     )
   }
-
+  
   const header = (
     <div className='table-header'>
       <h5 className='mx-0 my-1'>My Forms</h5>
@@ -144,18 +154,7 @@ const Dashboard = (props) => {
     )
   }
 
-  const designerformeditButton = () => {
-    return (
-      <div>
-        <Link to='/edit'>
-          <Button
-            label='Form Edit'
-            className='p-button-text p-button-raised '
-          />
-        </Link>
-      </div>
-    )
-  }
+
   return (
     <div className='datatable-crud-demo'>
       <Toast ref={toast} />
@@ -191,7 +190,6 @@ const Dashboard = (props) => {
           label='Create New Form'
           className='p-button-text p-button-raised -mt-6'
           onClick={() => {
-            setParentFormId(null)
             setShowFormDialog(true)
           }}
           style={{ float: 'right' }}
@@ -234,11 +232,6 @@ const Dashboard = (props) => {
             body='New Create'
             sortable
             style={{ width: 'auto' }}
-          ></Column>
-          <Column
-            header='Edit'
-            style={{ width: 'auto' }}
-            body={designerformeditButton}
           ></Column>
           <Column
             className='link'
