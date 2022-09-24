@@ -24,30 +24,14 @@ const AppTopbar = (props) => {
           <i className='pi pi-chevron-left'></i>
         </button>
 
-        <Link to='/'>
-          <img
-            id='logo-horizontal'
-            className='horizontal-logo'
-            src='assets/layout/images/logo-white.svg'
-            alt='diamond-layout'
-          />
-        </Link>
-
         <span className='topbar-separator'></span>
 
         <div
           className='layout-breadcrumb viewname'
-          style={{ textTransform: 'uppercase' }}
+          style={{ textTransform: 'uppercase', width: '100%' }}
         >
           <AppBreadcrumb routers={props.routers} />
         </div>
-
-        <img
-          id='logo-mobile'
-          className='mobile-logo'
-          src='assets/layout/images/logo-dark.svg'
-          alt='diamond-layout'
-        />
       </div>
 
       <AppMenu
@@ -72,77 +56,6 @@ const AppTopbar = (props) => {
             >
               <i className='pi pi-search'></i>
             </button>
-          </li>
-          <li className={notificationsItemClassName}>
-            <button
-              type='button'
-              className='p-link'
-              onClick={props.onTopbarNotification}
-            >
-              <i className='pi pi-bell'></i>
-              <span className='topbar-badge'>5</span>
-            </button>
-            <ul className='notifications-menu fade-in-up'>
-              <li role='menuitem'>
-                <button type='button' className='p-link' tabIndex='0'>
-                  <i className='pi pi-shopping-cart'></i>
-                  <div className='notification-item'>
-                    <div className='notification-summary'>New Order</div>
-                    <div className='notification-detail'>
-                      You have <strong>3</strong> new orders.
-                    </div>
-                  </div>
-                </button>
-              </li>
-              <li role='menuitem'>
-                <button type='button' className='p-link'>
-                  <i className='pi pi-check-square'></i>
-                  <div className='notification-item'>
-                    <div className='notification-summary'>
-                      Withdrawn Completed
-                    </div>
-                    <div className='notification-detail'>
-                      Funds are on their way.
-                    </div>
-                  </div>
-                </button>
-              </li>
-              <li role='menuitem'>
-                <button type='button' className='p-link'>
-                  <i className='pi pi-chart-line'></i>
-                  <div className='notification-item'>
-                    <div className='notification-summary'>Monthly Reports</div>
-                    <div className='notification-detail'>
-                      New reports are ready.
-                    </div>
-                  </div>
-                </button>
-              </li>
-              <li role='menuitem'>
-                <button type='button' className='p-link'>
-                  <i className='pi pi-comments'></i>
-                  <div className='notification-item'>
-                    <div className='notification-summary'>Comments</div>
-                    <div className='notification-detail'>
-                      <strong>2</strong> new comments.
-                    </div>
-                  </div>
-                </button>
-              </li>
-              <li role='menuitem'>
-                <button type='button' className='p-link'>
-                  <i className='pi pi-exclamation-circle'></i>
-                  <div className='notification-item'>
-                    <div className='notification-summary'>
-                      Chargeback Request
-                    </div>
-                    <div className='notification-detail'>
-                      <strong>1</strong> to review.
-                    </div>
-                  </div>
-                </button>
-              </li>
-            </ul>
           </li>
 
           <li className={profileItemClassName}>
@@ -185,7 +98,6 @@ const AppTopbar = (props) => {
               </li>
             </ul>
           </li>
-
         </ul>
       </div>
     </div>

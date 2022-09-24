@@ -107,8 +107,8 @@ const Dashboard = (props) => {
     if (response.error) {
       toast.current.show({
         severity: 'error',
-        summary: 'Klasör Oluşturulamadı',
-        detail: 'Klasör oluşturulamadı! Lütfen daha sonra tekrar deneyiziniz.',
+        summary: 'Form Oluşturulamadı',
+        detail: 'Form oluşturulamadı! Lütfen daha sonra tekrar deneyiziniz.',
         life: 3000,
       })
     } else {
@@ -117,8 +117,8 @@ const Dashboard = (props) => {
       getForms(props.history.location.state.folderId)
       toast.current.show({
         severity: 'success',
-        summary: 'Klasör Oluşturuldu',
-        detail: 'Klasör Oluşturuldu',
+        summary: 'Form Oluşturuldu',
+        detail: 'Form Oluşturuldu',
         life: 3000,
       })
     }
@@ -140,6 +140,19 @@ const Dashboard = (props) => {
           onClick={() => createNewForm()}
           autoFocus
         />
+      </div>
+    )
+  }
+
+  const designerformeditButton = () => {
+    return (
+      <div>
+        <Link to='/edit'>
+          <Button
+            label='Form Edit'
+            className='p-button-text p-button-raised '
+          />
+        </Link>
       </div>
     )
   }
@@ -173,22 +186,16 @@ const Dashboard = (props) => {
           <br />
           <hr />
         </Dialog>
-        <div style={{ display: 'flex', float: 'right' }} className='-mt-6'>
-          <Link to='/edit'>
-            <Button
-              label='Form Template'
-              className='p-button-raised  mr-2  p-button-text  p-button-success '
-            />
-          </Link>
-          <Button
-            label='Create New Form'
-            className='p-button-text p-button-raised'
-            onClick={() => {
-              setParentFormId(null)
-              setShowFormDialog(true)
-            }}
-          />
-        </div>
+
+        <Button
+          label='Create New Form'
+          className='p-button-text p-button-raised -mt-6'
+          onClick={() => {
+            setParentFormId(null)
+            setShowFormDialog(true)
+          }}
+          style={{ float: 'right' }}
+        />
       </div>
       <div className='card mt-5'>
         <DataTable
@@ -206,6 +213,7 @@ const Dashboard = (props) => {
           globalFilter={globalFilter}
           header={header}
           responsiveLayout='scroll'
+          className='mt-2'
         >
           <Column
             body={CheckBox}
@@ -216,17 +224,27 @@ const Dashboard = (props) => {
             field='title'
             header='Name'
             sortable
-            style={{ minWidth: 'auto' }}
+            style={{ width: 'auto' }}
             className='myforms '
           ></Column>
+
           <Column
             field=''
             header='Status'
             body='New Create'
             sortable
-            style={{ minWidth: '' }}
+            style={{ width: 'auto' }}
           ></Column>
-          <Column className='link' body={rightToolbarTemplate}></Column>
+          <Column
+            header='Edit'
+            style={{ width: 'auto' }}
+            body={designerformeditButton}
+          ></Column>
+          <Column
+            className='link'
+            body={rightToolbarTemplate}
+            style={{ width: 'auto' }}
+          ></Column>
         </DataTable>
       </div>
     </div>
