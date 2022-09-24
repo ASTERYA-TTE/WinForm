@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Tree } from 'primereact/tree'
 import FolderService from './services/folderService'
@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
 
 const AppMenu = (props) => {
-  const history = useHistory()
+  const history = useNavigate()
 
   const [folders, setFolders] = useState([])
   const [loading, setLoading] = useState(true)

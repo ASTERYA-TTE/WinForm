@@ -13,7 +13,6 @@ import './App.scss'
 import './components/Dashboard/Dashboard.css'
 import routers from './routes'
 
-
 const App = () => {
   const [menuActive, setMenuActive] = useState(false)
   const [menuMode, setMenuMode] = useState('static')
@@ -31,10 +30,9 @@ const App = () => {
   const [configActive, setConfigActive] = useState(false)
   const [inputStyle, setInputStyle] = useState('outlined')
   const [ripple, setRipple] = useState(false)
- 
+
   const copyTooltipRef = useRef()
   const location = useLocation()
-
 
   let menuClick = false
   let searchClick = false
@@ -42,7 +40,6 @@ const App = () => {
   let notificationMenuClick = false
   let rightMenuClick = false
   let configClick = false
-
 
   useEffect(() => {
     copyTooltipRef &&
@@ -57,7 +54,6 @@ const App = () => {
       unblockBodyScroll()
     }
   }, [staticMenuMobileActive])
-
 
   const onDocumentClick = () => {
     if (!searchClick && searchActive) {
@@ -188,7 +184,6 @@ const App = () => {
     event.preventDefault()
   }
 
-
   const hideOverlayMenu = () => {
     setOverlayMenuActive(false)
     setStaticMenuMobileActive(false)
@@ -252,9 +247,6 @@ const App = () => {
     colorScheme === 'light' ? menuTheme : ''
   )
 
-
-
-
   return (
     <div
       className={containerClassName}
@@ -262,7 +254,6 @@ const App = () => {
       onClick={onDocumentClick}
       style={{ resize: 'both' }}
     >
-      
       <Tooltip
         ref={copyTooltipRef}
         target='.block-action-copy'
@@ -300,7 +291,7 @@ const App = () => {
             <AppBreadcrumb routers={routers} />
           </div>
 
-          {routers.map((router, index) => {
+          {/* {routers.map((router, index) => {
             if (router.exact) {
               return (
                 <Route
@@ -321,12 +312,12 @@ const App = () => {
                 render={router.render}
               />
             )
-          })}
+          })} */}
         </div>
 
         <AppFooter />
       </div>
-     
+
       <AppSearch
         searchActive={searchActive}
         onSearchClick={onSearchClick}
