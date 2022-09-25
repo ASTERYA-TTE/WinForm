@@ -149,7 +149,7 @@ const AppMenu = (props) => {
   const folderTreeSelect = (e) => {
     setSelectedKey(e.value)
     //navigate({to:'/', options:{ state: {folderId: selectedKey} }})
-    navigate('/', { state: { folderId: selectedKey } })
+    navigate('/home', { state: { folderId: selectedKey } })
   }
 
   return (
@@ -183,7 +183,10 @@ const AppMenu = (props) => {
       </Dialog>
 
       <Link to='/' className='logo'>
-        <span className='app-name'>Winform</span>
+        <span className='app-name'>
+          <img src='favicon.png' alt='logo' width='20%' className='mr-3' />
+          Winform
+        </span>
       </Link>
 
       <div className='layout-menu-container'>

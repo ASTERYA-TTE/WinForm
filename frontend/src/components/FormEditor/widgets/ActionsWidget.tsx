@@ -48,7 +48,7 @@ export const ActionsWidget = observer(() => {
       <Button
         type='primary'
         onClick={() => {
-          window.location.href = '/app#/app'
+          window.location.href = '/home'
         }}
         style={{
           backgroundColor: 'white',

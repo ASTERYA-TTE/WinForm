@@ -7,12 +7,13 @@ import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
-import { Link,useLocation,useNavigation } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 
 const Dashboard = (props) => {
   const location = useLocation()
   const navigation = useNavigation()
+  const navigate = useNavigate()
   const [selectedForms, setSelectedForms] = useState(null)
   const [globalFilter, setGlobalFilter] = useState(null)
   const [checked, setChecked] = useState(false)
@@ -20,6 +21,7 @@ const Dashboard = (props) => {
   const [loading, setLoading] = useState(true)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
+  const [selectedKey, setSelectedKey] = useState(null)
   const toast = useRef(null)
   const dt = useRef(null)
 
@@ -51,8 +53,11 @@ const Dashboard = (props) => {
         </div>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Link to='/edit'>
-              <Button className='formdata p-1 p-button-rounded'>
+            <Link to='/editor'>
+              <Button
+                className='formdata p-1 p-button-rounded'
+                onClick={formSelectId}
+              >
                 <span className='px-3'>
                   {' '}
                   <i className='pi pi-file-edit'></i>
@@ -64,7 +69,7 @@ const Dashboard = (props) => {
       </div>
     )
   }
-  
+
   const header = (
     <div className='table-header'>
       <h5 className='mx-0 my-1'>My Forms</h5>
@@ -96,28 +101,28 @@ const Dashboard = (props) => {
     const params = {
       folder_id: folderId,
     }
+    console.log(params)
     const response = await FormService.listForms(params)
 
     setForms(response.data)
     setLoading(false)
   }
 
-  useEffect(() => {console.log('Daashboard useEffect Navigation',navigation)}, [navigation.state])
+  useEffect(() => {
+    console.log('Daashboard useEffect Navigation', navigation)
+  }, [navigation.state])
 
   useEffect(() => {
     console.log('Dashboard use effect calisti', location)
-    getForms(
-      location.state
-        ? location.state.folderId
-        : null
-    )
+    getForms(location.state ? location.state.folderId : null)
   }, [location.state])
 
-  const createNewForm = async () => {
+  const createNewForm = async (props) => {
     const params = {
       title: formName,
       folder_id: location.state.folderId,
     }
+
     const response = await FormService.createForms(params)
     if (response.error) {
       toast.current.show({
@@ -159,6 +164,13 @@ const Dashboard = (props) => {
     )
   }
 
+  const formSelectId = (e) => {
+    // setSelectedKey(e.value)
+    navigate('/editor', { state: { folderId: forms[0].id } })
+    console.log('Form id ', forms[0]._id)
+
+    console.log('bütün formlar', forms)
+  }
 
   return (
     <div className='datatable-crud-demo'>

@@ -38,7 +38,7 @@ const UserLogin = () => {
             <p style={{ color: ' #1976d2' }}>Login</p>
             <InputText placeholder='Email' />
             <Password placeholder='Password' />
-            <Link to='/app'>
+            <Link to='/home'>
               <Button label='CONTINUE' type='button'></Button>
             </Link>
           </div>

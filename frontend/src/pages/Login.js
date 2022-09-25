@@ -45,7 +45,7 @@ const Login = () => {
             <InputText placeholder='Full Name' />
             <InputText placeholder='Email' />
             <Password placeholder='Password' />
-            <Link to='/app'>
+            <Link to='/home'>
               <Button label='CONTINUE' type='button'></Button>
             </Link>
           </div>
