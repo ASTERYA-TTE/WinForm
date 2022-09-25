@@ -10,7 +10,7 @@ import './Dashboard.css'
 import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   const location = useLocation()
   const navigation = useNavigation()
   const navigate = useNavigate()
@@ -117,7 +117,7 @@ const Dashboard = (props) => {
     getForms(location.state ? location.state.folderId : null)
   }, [location.state])
 
-  const createNewForm = async (props) => {
+  const createNewForm = async () => {
     const params = {
       title: formName,
       folder_id: location.state.folderId,

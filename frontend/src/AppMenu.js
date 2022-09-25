@@ -184,8 +184,7 @@ const AppMenu = (props) => {
 
       <Link to='/' className='logo'>
         <span className='app-name'>
-          <img src='favicon.png' alt='logo' width='20%' className='mr-3' />
-          Winform
+          <img src='Winform.png' alt='logo' width='100%' className='mr-3' />
         </span>
       </Link>
 
