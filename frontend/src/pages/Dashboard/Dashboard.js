@@ -54,16 +54,15 @@ const Dashboard = () => {
         </div>
         <div className='button-demo mr-2'>
           <div className='template'>
-            
-              <Button
-                className='formdata p-1 p-button-rounded'
-                onClick={() => navigateToEditor(rowData)}
-              >
-                <span className='px-3'>
-                  {' '}
-                  <i className='pi pi-file-edit'></i>
-                </span>
-              </Button>
+            <Button
+              className='formdata p-1 p-button-rounded'
+              onClick={() => navigateToEditor(rowData)}
+            >
+              <span className='px-3'>
+                {' '}
+                <i className='pi pi-file-edit'></i>
+              </span>
+            </Button>
           </div>
         </div>
       </div>
@@ -165,7 +164,10 @@ const Dashboard = () => {
   }
 
   const navigateToEditor = (rowData) => {
-    navigate('/editor', { state: { formId: rowData._id } })
+    navigate('/editor', {
+      state: { formId: rowData._id, title: rowData.title },
+    })
+    console.log(rowData)
   }
 
   return (
