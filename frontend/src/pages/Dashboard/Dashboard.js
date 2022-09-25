@@ -25,7 +25,8 @@ const Dashboard = () => {
   const toast = useRef(null)
   const dt = useRef(null)
 
-  const rightToolbarTemplate = () => {
+  const rightToolbarTemplate = (rowData) => {
+    console.log('ROW DATA', rowData)
     return (
       <div style={{ display: 'flex', float: 'right' }}>
         <div className='button-demo mr-2'>
@@ -53,17 +54,16 @@ const Dashboard = () => {
         </div>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Link to='/editor'>
+            
               <Button
                 className='formdata p-1 p-button-rounded'
-                onClick={formSelectId}
+                onClick={() => navigateToEditor(rowData)}
               >
                 <span className='px-3'>
                   {' '}
                   <i className='pi pi-file-edit'></i>
                 </span>
               </Button>
-            </Link>
           </div>
         </div>
       </div>
@@ -164,12 +164,8 @@ const Dashboard = () => {
     )
   }
 
-  const formSelectId = (e) => {
-    // setSelectedKey(e.value)
-    navigate('/editor', { state: { folderId: forms[0].id } })
-    console.log('Form id ', forms[0]._id)
-
-    console.log('bütün formlar', forms)
+  const navigateToEditor = (rowData) => {
+    navigate('/editor', { state: { formId: rowData._id } })
   }
 
   return (

@@ -4,12 +4,16 @@ import { useDesigner, TextWidget } from '@designable/react'
 import { GlobalRegistry } from '@designable/core'
 import { observer } from '@formily/react'
 import { loadInitialSchema, saveSchema } from '../service'
+import { useLocation } from 'react-router-dom'
 
 export const ActionsWidget = observer(() => {
+  const location = useLocation()
   const designer = useDesigner()
   useEffect(() => {
-    loadInitialSchema(designer)
-  }, [])
+    if(location.state) {
+      loadInitialSchema(designer, location.state.formId)
+    }
+  }, [location.state])
   const supportLocales = ['tr-tr', 'en-us']
   useEffect(() => {
     if (!supportLocales.includes(GlobalRegistry.getDesignerLanguage())) {
@@ -32,7 +36,11 @@ export const ActionsWidget = observer(() => {
 
       <Button
         onClick={() => {
-          saveSchema(designer)
+          console.log('Location state ne geliyor', location)
+          if (location.state && location.state.formId){
+            saveSchema(designer, location.state.formId)
+          }
+          
         }}
       >
         <TextWidget>Save</TextWidget>
@@ -40,7 +48,7 @@ export const ActionsWidget = observer(() => {
       <Button
         type='primary'
         onClick={() => {
-          saveSchema(designer)
+         // Publish aksiyonu
         }}
       >
         <TextWidget>Publish</TextWidget>

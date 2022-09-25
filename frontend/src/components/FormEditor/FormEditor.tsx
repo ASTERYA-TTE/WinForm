@@ -1,5 +1,6 @@
 import '../../../node_modules/antd/dist/antd.less'
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
+import {useLocation} from 'react-router-dom'
 
 import {
   Designer,
@@ -88,6 +89,17 @@ GlobalRegistry.registerDesignerLocales({
 })
 
 const FormEditor = () => {
+
+  const location = useLocation()
+
+  useEffect(() => {
+    //  Formu al
+    console.log('Editor use effect location state',location.state)
+    
+  }, [location.state])
+
+
+
   const engine = useMemo(
     () =>
       createDesigner({
@@ -98,7 +110,9 @@ const FormEditor = () => {
               [KeyCode.Control, KeyCode.S],
             ],
             handler(ctx) {
-              saveSchema(ctx.engine)
+              if(location.state) {
+                saveSchema(ctx.engine, location.state.formId)
+              }
             },
           }),
         ],
