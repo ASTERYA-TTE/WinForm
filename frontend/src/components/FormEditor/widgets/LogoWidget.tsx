@@ -30,8 +30,8 @@ export const LogoWidget: React.FC = () => {
         <Button label='Return To Dashboard' className='p-button-text ' />
       </Button>
 
-      <Button className='p-button-raised px-6 p-button-outlined p-button-success'>
-        {locationToDashboardFormTitle}
+      <Button className='p-button-raised px-6 p-button-outlined p-button-primary'>
+        Form Name: {locationToDashboardFormTitle}
       </Button>
     </div>
   )
