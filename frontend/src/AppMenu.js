@@ -43,7 +43,7 @@ const AppMenu = (props) => {
   }, [])
 
   const folderTreeNodeTemplate = (node, options) => {
-    let label = <b>{node.label}</b>
+    let label = <b className='px-2'>{node.label}</b>
 
     return (
       <span
@@ -52,12 +52,13 @@ const AppMenu = (props) => {
       >
         {label}
         <Button
-          className='p-button-rounded p-button-text -mt-6 px-2'
+          className='p-button-rounded p-button-text -mt-6 px-3'
           aria-label='Submit'
           onClick={() => {
             setShowFolderDialog(true)
             setParentFolderId(node.key)
           }}
+          style={{ marginLeft: '20px' }}
         />
         <i
           className='pi pi-plus mt-1 '

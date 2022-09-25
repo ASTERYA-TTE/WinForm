@@ -250,7 +250,7 @@ const App = () => {
       className={containerClassName}
       data-theme={colorScheme}
       onClick={onDocumentClick}
-      style={{ resize: 'both' }}
+      style={{ resize: 'both', marginLeft: '50px' }}
     >
       <Tooltip
         ref={copyTooltipRef}
@@ -285,8 +285,7 @@ const App = () => {
           <div
             className='layout-breadcrumb viewname'
             style={{ textTransform: 'uppercase' }}
-          >
-          </div>
+          ></div>
 
           {/* {routers.map((router, index) => {
             if (router.exact) {
@@ -310,7 +309,7 @@ const App = () => {
               />
             )
           })} */}
-           <Outlet />
+          <Outlet />
         </div>
 
         <AppFooter />

@@ -13,10 +13,10 @@ const AppTopbar = (props) => {
 
   return (
     <div className='layout-topbar'>
-      <div className='topbar-left'>
+      <div className='topbar-left' style={{ marginLeft: '50px' }}>
         <button
           type='button'
-          className='menu-button p-link'
+          className='menu-button p-link '
           onClick={props.onMenuButtonClick}
         >
           <i className='pi pi-chevron-left'></i>
@@ -27,8 +27,7 @@ const AppTopbar = (props) => {
         <div
           className='layout-breadcrumb viewname'
           style={{ textTransform: 'uppercase', width: '100%' }}
-        >
-        </div>
+        ></div>
       </div>
 
       <AppMenu
