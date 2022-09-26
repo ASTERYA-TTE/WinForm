@@ -14,7 +14,6 @@ export const LogoWidget = () => {
   const returnToDashboard = () => {
     navigate('/home', {
       state: {
-        //formId: location.state.formId,
         formTitle: locationToDashboardFormTitle,
       },
     })

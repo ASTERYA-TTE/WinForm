@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom'
 import AppMenu from './AppMenu'
 
 const AppTopbar = (props) => {
-  const notificationsItemClassName = classNames('notifications-item', {
-    'active-menuitem': props.topbarNotificationMenuActive,
-  })
   const profileItemClassName = classNames('profile-item', {
     'active-menuitem fadeInDown': props.topbarUserMenuActive,
   })

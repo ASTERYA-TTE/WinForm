@@ -7,11 +7,11 @@ import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import reducer from './redux/reducer/reducer.tsx'
-
+import { store } from './redux/reduxYeniÇıkanKullanımı/store/store'
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_ADDRESS
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
-const store = createStore(reducer, applyMiddleware(thunk))
+//const store = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
   <React.StrictMode>

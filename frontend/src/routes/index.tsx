@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from '../App'
+import App from '../App.js'
 import Dashboard from '../pages/Dashboard/Dashboard'
 import FormCreator from '../components/FormEditor/FormEditor'
 import Login from '../pages/Login'

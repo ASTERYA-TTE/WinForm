@@ -1,6 +1,7 @@
 import '../../../node_modules/antd/dist/antd.less'
 import React, { useMemo, useEffect } from 'react'
-import {useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { LogoWidget } from './widgets/LogoWidget'
 
 import {
   Designer,
@@ -30,12 +31,12 @@ import {
   KeyCode,
 } from '@designable/core'
 import {
-  LogoWidget,
   ActionsWidget,
   PreviewWidget,
   SchemaEditorWidget,
   MarkupSchemaWidget,
 } from './widgets'
+
 import { saveSchema } from './service'
 import {
   Form,
@@ -89,16 +90,12 @@ GlobalRegistry.registerDesignerLocales({
 })
 
 const FormEditor = () => {
-
   const location = useLocation()
 
   useEffect(() => {
     //  Formu al
-    console.log('Editor use effect location state',location.state)
-    
+    console.log('Editor use effect location state', location.state)
   }, [location.state])
-
-
 
   const engine = useMemo(
     () =>
@@ -110,7 +107,7 @@ const FormEditor = () => {
               [KeyCode.Control, KeyCode.S],
             ],
             handler(ctx) {
-              if(location.state) {
+              if (location.state) {
                 saveSchema(ctx.engine, location.state.formId)
               }
             },

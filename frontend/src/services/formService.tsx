@@ -5,7 +5,7 @@ const formUpdateUrl = '/form/update'
 const getFormUrl = '/form/getForm'
 
 class FormService {
-  async createForms(params) {
+  async createForms(params: any) {
     try {
       const response = await axios.post(formCreateUrl, params)
       return { data: response.data, error: null }
@@ -14,7 +14,7 @@ class FormService {
     }
   }
 
-  async listForms(params) {
+  async listForms(params: any) {
     try {
       const response = await axios.post(formListUrl, params)
       return { data: response.data, error: null }
@@ -23,7 +23,7 @@ class FormService {
     }
   }
 
-  async updateForm(params) {
+  async updateForm(params: any) {
     try {
       const response = await axios.post(formUpdateUrl, params)
       return { data: response.data, error: null }
@@ -32,15 +32,14 @@ class FormService {
     }
   }
 
-  async getForm(formId) {
+  async getForm(formId: any) {
     try {
-      const response = await axios.post(getFormUrl, {formId:formId})
+      const response = await axios.post(getFormUrl, { formId: formId })
       return { data: response, error: null }
     } catch (error) {
       return { error: error }
     }
   }
-
 }
 
-export default FormService = new FormService()
+export default new FormService()
