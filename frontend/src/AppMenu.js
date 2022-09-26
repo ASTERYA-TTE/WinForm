@@ -8,6 +8,11 @@ import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
+import { connect } from 'react-redux'
+import {
+  getFolderTreeSelect,
+  updateFolderTreeSelect,
+} from './redux/actions/actions.tsx'
 
 const AppMenu = (props) => {
   const navigate = useNavigate()
@@ -40,6 +45,7 @@ const AppMenu = (props) => {
 
   useEffect(() => {
     getFolders(null)
+    props.getFolderTreeSelect()
   }, [])
 
   const folderTreeNodeTemplate = (node, options) => {
@@ -74,15 +80,15 @@ const AppMenu = (props) => {
 
   const loadOnExpand = async (event) => {
     // if (!event.node.children) {
-    console.log('Bu tree event', event)
+    //console.log('Bu tree event', event)
     setLoading(true)
     let node = { ...event.node }
-    console.log('Burası tree nin nodu ', node)
+    //console.log('Burası tree nin nodu ', node)
     const params = {
       parent_folder_id: node.key,
     }
     const response = await FolderService.listFolders(params)
-    console.log('child geldi', response)
+    //console.log('child geldi', response)
     const childFolders = response.data.map((folder) => {
       return {
         key: folder._id,
@@ -94,7 +100,7 @@ const AppMenu = (props) => {
 
     let value = [...folders]
     value[value.findIndex((x) => x.key == node.key)] = node
-    console.log('Yeni folderslar', value)
+    //console.log('Yeni folderslar', value)
     setFolders(value)
     setLoading(false)
     // }
@@ -149,7 +155,6 @@ const AppMenu = (props) => {
 
   const folderTreeSelect = (e) => {
     setSelectedKey(e.value)
-    //navigate({to:'/', options:{ state: {folderId: selectedKey} }})
     navigate('/home', { state: { folderId: selectedKey } })
   }
 
@@ -218,4 +223,13 @@ const AppMenu = (props) => {
   )
 }
 
-export default AppMenu
+const mapStateProps = (state) => {
+  return {
+    folders: state.folders,
+  }
+}
+
+export default connect(mapStateProps, {
+  getFolderTreeSelect,
+  updateFolderTreeSelect,
+})(AppMenu)

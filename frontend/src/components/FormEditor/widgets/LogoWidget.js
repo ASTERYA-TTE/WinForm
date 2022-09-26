@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from 'primereact/button'
 
-export const LogoWidget: React.FC = () => {
+export const LogoWidget = () => {
   let location = useLocation()
   let navigate = useNavigate()
   const [locationToDashboardFormTitle, setlocationToDashboardForm] =

@@ -87,10 +87,12 @@ const AppTopbar = (props) => {
                 </button>
               </li>
               <li>
-                <button type='button' className='p-link'>
-                  <i className='pi pi-power-off'></i>
-                  <span>Logout</span>
-                </button>
+                <Link to='/'>
+                  <button type='button' className='p-link'>
+                    <i className='pi pi-power-off'></i>
+                    <span>Logout</span>
+                  </button>
+                </Link>
               </li>
             </ul>
           </li>
