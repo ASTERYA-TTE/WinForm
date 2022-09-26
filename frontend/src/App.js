@@ -22,12 +22,8 @@ const App = () => {
   const [staticMenuMobileActive, setStaticMenuMobileActive] = useState(false)
   const [searchActive, setSearchActive] = useState(false)
   const [topbarUserMenuActive, setTopbarUserMenuActive] = useState(false)
-  const [topbarNotificationMenuActive, setTopbarNotificationMenuActive] =
-    useState(false)
-  const [rightMenuActive, setRightMenuActive] = useState(false)
+
   const [configActive, setConfigActive] = useState(false)
-  const [inputStyle, setInputStyle] = useState('outlined')
-  const [ripple, setRipple] = useState(false)
 
   const copyTooltipRef = useRef()
   const location = useLocation()
@@ -35,8 +31,6 @@ const App = () => {
   let menuClick = false
   let searchClick = false
   let userMenuClick = false
-  let notificationMenuClick = false
-  let rightMenuClick = false
   let configClick = false
 
   useEffect(() => {
@@ -58,18 +52,6 @@ const App = () => {
       onSearchHide()
     }
 
-    if (!userMenuClick) {
-      setTopbarUserMenuActive(false)
-    }
-
-    if (!notificationMenuClick) {
-      setTopbarNotificationMenuActive(false)
-    }
-
-    if (!rightMenuClick) {
-      setRightMenuActive(false)
-    }
-
     if (!menuClick) {
       if (isSlim() || isHorizontal()) {
         setMenuActive(false)
@@ -89,8 +71,7 @@ const App = () => {
     searchClick = false
     configClick = false
     userMenuClick = false
-    rightMenuClick = false
-    notificationMenuClick = false
+
     menuClick = false
   }
 
@@ -101,8 +82,6 @@ const App = () => {
   const onMenuButtonClick = (event) => {
     menuClick = true
     setTopbarUserMenuActive(false)
-    setTopbarNotificationMenuActive(false)
-    setRightMenuActive(false)
 
     if (isOverlay()) {
       setOverlayMenuActive((prevOverlayMenuActive) => !prevOverlayMenuActive)
@@ -121,16 +100,6 @@ const App = () => {
     event.preventDefault()
   }
 
-  const onMenuitemClick = (event) => {
-    if (!event.item.items) {
-      hideOverlayMenu()
-
-      if (isSlim() || isHorizontal()) {
-        setMenuActive(false)
-      }
-    }
-  }
-
   const onRootMenuitemClick = () => {
     setMenuActive((prevMenuActive) => !prevMenuActive)
   }
@@ -139,17 +108,6 @@ const App = () => {
     userMenuClick = true
     setTopbarUserMenuActive(
       (prevTopbarUserMenuActive) => !prevTopbarUserMenuActive
-    )
-
-    hideOverlayMenu()
-
-    event.preventDefault()
-  }
-
-  const onTopbarNotificationMenuButtonClick = (event) => {
-    notificationMenuClick = true
-    setTopbarNotificationMenuActive(
-      (prevTopbarNotificationMenuActive) => !prevTopbarNotificationMenuActive
     )
 
     hideOverlayMenu()
@@ -169,17 +127,6 @@ const App = () => {
   const onSearchHide = () => {
     setSearchActive(false)
     searchClick = false
-  }
-
-  const onRightMenuClick = () => {
-    rightMenuClick = true
-  }
-
-  const onRightMenuButtonClick = (event) => {
-    rightMenuClick = true
-    setRightMenuActive((prevRightMenuActive) => !prevRightMenuActive)
-    hideOverlayMenu()
-    event.preventDefault()
   }
 
   const hideOverlayMenu = () => {
@@ -239,8 +186,7 @@ const App = () => {
       'layout-mobile-active': staticMenuMobileActive,
       'layout-static-inactive':
         staticMenuDesktopInactive && menuMode === 'static',
-      'p-input-filled': inputStyle === 'filled',
-      'p-ripple-disabled': !ripple,
+      'p-input-filled': 'filled',
     },
     colorScheme === 'light' ? menuTheme : ''
   )
@@ -262,19 +208,13 @@ const App = () => {
       <div className='layout-content-wrapper'>
         <AppTopbar
           routers={routers}
-          topbarNotificationMenuActive={topbarNotificationMenuActive}
           topbarUserMenuActive={topbarUserMenuActive}
           onMenuButtonClick={onMenuButtonClick}
           onSearchClick={toggleSearch}
-          onTopbarNotification={onTopbarNotificationMenuButtonClick}
           onTopbarUserMenu={onTopbarUserMenuButtonClick}
-          onRightMenuClick={onRightMenuButtonClick}
-          onRightMenuButtonClick={onRightMenuButtonClick}
-          menuMode={menuMode}
           menuActive={menuActive}
           staticMenuMobileActive={staticMenuMobileActive}
           onMenuClick={onMenuClick}
-          onMenuitemClick={onMenuitemClick}
           onRootMenuitemClick={onRootMenuitemClick}
         ></AppTopbar>
 
@@ -287,28 +227,6 @@ const App = () => {
             style={{ textTransform: 'uppercase' }}
           ></div>
 
-          {/* {routers.map((router, index) => {
-            if (router.exact) {
-              return (
-                <Route
-                  key={`router${index}`}
-                  path={router.path}
-                  exact
-                  component={router.component}
-                  render={router.render}
-                />
-              )
-            }
-
-            return (
-              <Route
-                key={`router${index}`}
-                path={router.path}
-                component={router.component}
-                render={router.render}
-              />
-            )
-          })} */}
           <Outlet />
         </div>
 

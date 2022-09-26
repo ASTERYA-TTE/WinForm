@@ -9,7 +9,6 @@ import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
 import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
-import Apps from '../../redux/reduxYeniÇıkanKullanımı/Apps'
 
 const Dashboard = () => {
   const location = useLocation()
@@ -22,7 +21,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
-  const [selectedKey, setSelectedKey] = useState(null)
   const toast = useRef(null)
   const dt = useRef(null)
 
@@ -241,7 +239,6 @@ const Dashboard = () => {
             style={{ width: 'auto' }}
             className='myforms '
           ></Column>
-
           <Column
             field=''
             header='Status'
@@ -256,7 +253,6 @@ const Dashboard = () => {
           ></Column>
         </DataTable>
       </div>
-      {/* <Apps /> */}
     </div>
   )
 }
