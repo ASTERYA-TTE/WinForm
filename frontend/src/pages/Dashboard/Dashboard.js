@@ -9,8 +9,9 @@ import { Dialog } from 'primereact/dialog'
 import './Dashboard.css'
 import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
+import { connect } from 'react-redux'
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const location = useLocation()
   const navigation = useNavigation()
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ const Dashboard = () => {
   const [globalFilter, setGlobalFilter] = useState(null)
   const [checked, setChecked] = useState(false)
   const [forms, setForms] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
   const [deleteFormTitle, setDeleteFormTitle] = useState(false)
@@ -106,14 +107,14 @@ const Dashboard = () => {
     setLoading(false)
   }
 
-  useEffect(() => {
-    console.log('Daashboard useEffect Navigation', navigation)
-  }, [navigation.state])
+  // useEffect(() => {
+  //   console.log('Daashboard useEffect Navigation', navigation)
+  // }, [navigation.state])
 
-  useEffect(() => {
-    console.log('Dashboard use effect calisti', location)
-    getForms(location.state ? location.state.folderId : null)
-  }, [location.state])
+  // useEffect(() => {
+  //   console.log('Dashboard use effect calisti', location)
+  //   getForms(location.state ? location.state.folderId : null)
+  // }, [location.state])
 
   const createNewForm = async () => {
     const params = {
@@ -306,7 +307,7 @@ const Dashboard = () => {
       <div className='card mt-5'>
         <DataTable
           ref={dt}
-          value={forms}
+          value={props.forms}
           selection={selectedForms}
           loading={loading}
           onSelectionChange={(e) => setSelectedForms(e.value)}
@@ -350,4 +351,14 @@ const Dashboard = () => {
     </div>
   )
 }
-export default Dashboard
+
+
+const mapStateProps = (state) => {
+  return {
+    forms: state.forms,
+  }
+}
+
+export default connect(mapStateProps, {})(Dashboard)
+
+

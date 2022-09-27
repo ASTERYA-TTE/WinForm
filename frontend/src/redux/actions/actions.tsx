@@ -1,20 +1,20 @@
 import axios from 'axios'
 
-export const getFolderTreeSelect = () => (dispatch: any) => {
+export const getFolderTreeSelect = (folderId:any) => (dispatch: any) => {
   axios
-    .post('http://localhost:27017/form/list')
+    .post('/form/list', {folder_id:folderId})
     .then((res) => {
-      dispatch({ type: 'Selected_Folder_Success', payload: res.data })
+      dispatch({ type: 'UPDATE_FORMS', payload: res.data })
     })
     .catch((error) =>
-      dispatch({ type: 'Selected_Folder_Error', payload: error })
+      dispatch({ type: 'UPDATE_FORMS_ERROR', payload: error })
     )
 }
 
 export const updateFolderTreeSelect =
   (selectedFolder: any) => (dispatch: any) => {
     dispatch({
-      type: 'Update_Selected_Folder',
+      type: 'UPDATE_SELECTED_FOLDER',
       payload: selectedFolder,
     })
   }

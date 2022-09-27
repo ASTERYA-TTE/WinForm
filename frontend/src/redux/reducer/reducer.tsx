@@ -1,16 +1,17 @@
 const initialState = {
-  leftSideBarFolder: [],
+  forms: [],
   selectedLeftSideBarFolder: null,
+  update_error:null
 }
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case 'Selected_Folder_Success':
-      return { ...state, leftSideBarFolder: action.payload }
+    case 'UPDATE_FORMS':
+      return { ...state, forms: action.payload }
 
-    case 'Selected_Folder_Error':
-      return { ...state, leftSideBarFolder: action.payload }
+    case 'UPDATE_FORMS_ERROR':
+      return { ...state, update_error: action.payload }
 
-    case 'Update_Selected_Folder':
+    case 'UPDATE_SELECTED_FOLDER':
       return { ...state, selectedLeftSideBarFolder: action.payload }
 
     default:
