@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const getFolderTreeSelect = () => (dispatch: any) => {
   axios
-    .get('http://localhost:27017/form/list')
+    .post('http://localhost:27017/form/list')
     .then((res) => {
       dispatch({ type: 'Selected_Folder_Success', payload: res.data })
     })

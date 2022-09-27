@@ -21,34 +21,34 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
+  const [deleteFormTitle, setDeleteFormTitle] = useState(false)
+  const [formEditName, setFormEditName] = useState('')
+  const [formEdit, setFormEdit] = useState('')
   const toast = useRef(null)
   const dt = useRef(null)
 
   const rightToolbarTemplate = (rowData) => {
-    console.log('ROW DATA', rowData)
     return (
       <div style={{ display: 'flex', float: 'right' }}>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Link to='./FormEdit' style={{ color: 'white' }}>
-              <Button className='formedit p-1 p-button-rounded '>
-                <span className='px-3'>
-                  <i className='pi pi-pencil'></i>
-                </span>
-              </Button>
-            </Link>
+            <Button className='formedit p-1 p-button-rounded '>
+              <span className='px-3'>
+                <i className='pi pi-pencil'></i>
+              </span>
+            </Button>
           </div>
         </div>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Link to='./FormData' style={{ color: 'white' }}>
-              <Button className='formdata p-1 p-button-rounded'>
-                <span className='px-3'>
-                  {' '}
-                  <i className='pi pi-database'></i>
-                </span>
-              </Button>
-            </Link>
+            <Button
+              className='formdata p-1 p-button-rounded'
+              onClick={() => setDeleteFormTitle(true)}
+            >
+              <span className='px-3'>
+                <i className='pi pi-database'></i>
+              </span>
+            </Button>
           </div>
         </div>
         <div className='button-demo mr-2'>
@@ -101,7 +101,7 @@ const Dashboard = () => {
     }
     console.log(params)
     const response = await FormService.listForms(params)
-
+    console.log(response, 'forms', forms)
     setForms(response.data)
     setLoading(false)
   }
@@ -169,6 +169,42 @@ const Dashboard = () => {
     console.log(rowData)
   }
 
+  const confirmDeleteProduct = (form) => {
+    setFormEdit(form)
+    setDeleteFormTitle(false)
+    let formsAll = forms.filter((val) => val.id !== formEdit.id)
+    setForms(formsAll)
+
+    setFormEdit('')
+    toast.current.show({
+      severity: 'success',
+      summary: 'Successful',
+      detail: 'Product Deleted',
+      life: 3000,
+    })
+  }
+
+  const renderDeleteDialogFooter = (rowData) => {
+    console.log(forms)
+    return (
+      <div>
+        <Button
+          label='No'
+          icon='pi pi-times'
+          onClick={() => setDeleteFormTitle(false)}
+          className=' inputbutton p-button-raised p-button-plain p-button-text'
+          style={{ float: 'left' }}
+        />
+        <Button
+          label='Add'
+          icon='pi pi-check'
+          onClick={() => confirmDeleteProduct(rowData)}
+          autoFocus
+        />
+      </div>
+    )
+  }
+
   return (
     <div className='datatable-crud-demo'>
       <Toast ref={toast} />
@@ -209,6 +245,64 @@ const Dashboard = () => {
           style={{ float: 'right' }}
         />
       </div>
+      <div>
+        <Dialog
+          header='Edit Form'
+          visible={deleteFormTitle}
+          onHide={() => setDeleteFormTitle(false)}
+          breakpoints={{ '960px': '75vw' }}
+          style={{ width: '30vw' }}
+          footer={renderDeleteDialogFooter}
+        >
+          <hr />
+          <br />
+          <div>
+            <h4>
+              <b>Edit Form Name</b>
+            </h4>
+            <InputText
+              type='text'
+              value={formEditName}
+              placeholder={forms.title}
+              className='p-inputtext-lg block'
+              style={{ width: '100%' }}
+              onChange={(e) => setFormEditName(e.target.value)}
+            />
+          </div>
+          <br />
+          <hr />
+        </Dialog>
+
+        <Button
+          label='Create New Form'
+          className='p-button-text p-button-raised -mt-6'
+          onClick={() => {
+            setShowFormDialog(true)
+          }}
+          style={{ float: 'right' }}
+        />
+      </div>
+
+      <Dialog
+        visible={deleteFormTitle}
+        style={{ width: '450px' }}
+        header='Confirm'
+        modal
+        footer={renderDeleteDialogFooter}
+        onHide={() => setDeleteFormTitle(false)}
+      >
+        <div className='confirmation-content'>
+          <i
+            className='pi pi-exclamation-triangle mr-3'
+            style={{ fontSize: '2rem' }}
+          />
+
+          <span>
+            Are you sure you want to delete <b>{formEdit.title}</b>?
+          </span>
+        </div>
+      </Dialog>
+
       <div className='card mt-5'>
         <DataTable
           ref={dt}
