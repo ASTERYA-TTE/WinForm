@@ -3,6 +3,7 @@ const formCreateUrl = '/form/create'
 const formListUrl = '/form/list'
 const formUpdateUrl = '/form/update'
 const getFormUrl = '/form/getForm'
+const deleteUrl = '/from/delete'
 
 class FormService {
   async createForms(params: any) {
@@ -35,6 +36,15 @@ class FormService {
   async getForm(formId: any) {
     try {
       const response = await axios.post(getFormUrl, { formId: formId })
+      return { data: response, error: null }
+    } catch (error) {
+      return { error: error }
+    }
+  }
+
+  async deleteForm(formId: any) {
+    try {
+      const response = await axios.post(deleteUrl, { formId: formId })
       return { data: response, error: null }
     } catch (error) {
       return { error: error }
