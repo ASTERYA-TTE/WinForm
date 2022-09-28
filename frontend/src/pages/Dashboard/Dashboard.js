@@ -10,9 +10,8 @@ import './Dashboard.css'
 import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 import { connect } from 'react-redux'
-import {
-  getFolderTreeSelect,
-} from '../../redux/actions/actions.tsx'
+import { getFolderTreeSelect } from '../../redux/actions/actions.tsx'
+import { classNames } from 'primereact/utils'
 
 const Dashboard = (props) => {
   const location = useLocation()
@@ -25,9 +24,10 @@ const Dashboard = (props) => {
   const [loading, setLoading] = useState(false)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
-  const [deleteFormTitle, setDeleteFormTitle] = useState(false)
-  const [formEditName, setFormEditName] = useState('')
   const [formEdit, setFormEdit] = useState('')
+  const [deleteFormDialog, setDeleteFormDialog] = useState(false)
+  const [formTitleDialog, setFormTitleDialog] = useState(false)
+  const [formSaveSubmitted, setFormSaveSubmitted] = useState(false)
   const toast = useRef(null)
   const dt = useRef(null)
 
@@ -36,7 +36,10 @@ const Dashboard = (props) => {
       <div style={{ display: 'flex', float: 'right' }}>
         <div className='button-demo mr-2'>
           <div className='template'>
-            <Button className='formedit p-1 p-button-rounded '>
+            <Button
+              className='formedit p-1 p-button-rounded '
+              onClick={() => editForm(rowData)}
+            >
               <span className='px-3'>
                 <i className='pi pi-pencil'></i>
               </span>
@@ -47,7 +50,7 @@ const Dashboard = (props) => {
           <div className='template'>
             <Button
               className='formdata p-1 p-button-rounded'
-              onClick={() => setDeleteFormTitle(true)}
+              onClick={() => confirmDeleteForm(rowData)}
             >
               <span className='px-3'>
                 <i className='pi pi-database'></i>
@@ -99,16 +102,16 @@ const Dashboard = (props) => {
     )
   }
 
-  const getForms = async (folderId) => {
-    const params = {
-      folder_id: folderId,
-    }
-    console.log(params)
-    const response = await FormService.listForms(params)
-    console.log(response, 'forms', forms)
-    setForms(response.data)
-    setLoading(false)
-  }
+  // const getForms = async (folderId) => {
+  //   const params = {
+  //     folder_id: folderId,
+  //   }
+  //   console.log(params)
+  //   const response = await FormService.listForms(params)
+  //   console.log(response, 'forms', forms)
+  //   setForms(response.data)
+  //   setLoading(false)
+  // }
 
   // useEffect(() => {
   //   console.log('Daashboard useEffect Navigation', navigation)
@@ -174,12 +177,24 @@ const Dashboard = (props) => {
     console.log(rowData)
   }
 
-  const confirmDeleteProduct = (form) => {
-    setFormEdit(form)
-    setDeleteFormTitle(false)
-    let formsAll = forms.filter((val) => val.id !== formEdit.id)
-    setForms(formsAll)
+  const hideFormDialog = () => {
+    setFormSaveSubmitted(false)
+    setFormTitleDialog(false)
+  }
 
+  const hideDeleteFormDialog = () => {
+    setDeleteFormDialog(false)
+  }
+
+  const confirmDeleteForm = (form) => {
+    setFormEdit(form)
+    setDeleteFormDialog(true)
+  }
+
+  const deleteForm = () => {
+    let _formsAll = forms.filter((val) => val.id !== formEdit.id)
+    setForms(_formsAll)
+    setDeleteFormDialog(false)
     setFormEdit('')
     toast.current.show({
       severity: 'success',
@@ -189,27 +204,89 @@ const Dashboard = (props) => {
     })
   }
 
-  const renderDeleteDialogFooter = (rowData) => {
-    console.log(forms)
-    return (
-      <div>
-        <Button
-          label='No'
-          icon='pi pi-times'
-          onClick={() => setDeleteFormTitle(false)}
-          className=' inputbutton p-button-raised p-button-plain p-button-text'
-          style={{ float: 'left' }}
-        />
-        <Button
-          label='Add'
-          icon='pi pi-check'
-          onClick={() => confirmDeleteProduct(rowData)}
-          autoFocus
-        />
-      </div>
-    )
+  const findIndexById = (id) => {
+    let index = -1
+    for (let i = 0; i < forms.length; i++) {
+      if (forms[i].id === id) {
+        index = i
+        break
+      }
+    }
+
+    return index
   }
 
+  const onInputChange = (e, title) => {
+    const val = (e.target && e.target.value) || ''
+    let _formOne = { ...formEdit }
+    _formOne[`${title}`] = val
+
+    setFormEdit(_formOne)
+  }
+
+  const deleteFormDialogFooter = (
+    <React.Fragment>
+      <Button
+        label='No'
+        icon='pi pi-times'
+        className='p-button-text'
+        onClick={hideDeleteFormDialog}
+      />
+      <Button
+        label='Yes'
+        icon='pi pi-check'
+        className='p-button-text'
+        onClick={deleteForm}
+      />
+    </React.Fragment>
+  )
+
+  const saveForm = () => {
+    setFormSaveSubmitted(true)
+
+    if (formEdit.title.trim()) {
+      let _formsAll = [...forms]
+      let _formOne = { ...formEdit }
+      console.log(_formOne, 'formOne')
+      if (formEdit.id) {
+        const index = findIndexById(formEdit.id)
+        console.log(index, 'index')
+        _formsAll[index] = _formOne
+        toast.current.show({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Updated',
+          life: 3000,
+        })
+      }
+
+      setForms(_formsAll)
+      setFormTitleDialog(false)
+      setFormEdit('')
+    }
+  }
+
+  const editForm = (form) => {
+    setFormEdit({ ...form })
+    setFormTitleDialog(true)
+  }
+
+  const formDialogFooter = (
+    <React.Fragment>
+      <Button
+        label='Cancel'
+        icon='pi pi-times'
+        className='p-button-text'
+        onClick={hideFormDialog}
+      />
+      <Button
+        label='Save'
+        icon='pi pi-check'
+        className='p-button-text'
+        onClick={saveForm}
+      />
+    </React.Fragment>
+  )
   return (
     <div className='datatable-crud-demo'>
       <Toast ref={toast} />
@@ -252,22 +329,50 @@ const Dashboard = (props) => {
       </div>
 
       <Dialog
-        visible={deleteFormTitle}
+        visible={deleteFormDialog}
         style={{ width: '450px' }}
         header='Confirm'
         modal
-        footer={renderDeleteDialogFooter}
-        onHide={() => setDeleteFormTitle(false)}
+        footer={deleteFormDialogFooter}
+        onHide={hideDeleteFormDialog}
       >
         <div className='confirmation-content'>
           <i
             className='pi pi-exclamation-triangle mr-3'
             style={{ fontSize: '2rem' }}
           />
+          {formEdit && (
+            <span>
+              Are you sure you want to delete <b>{formEdit.title}</b>?
+            </span>
+          )}
+        </div>
+      </Dialog>
 
-          <span>
-            Are you sure you want to delete <b>{formEdit.title}</b>?
-          </span>
+      <Dialog
+        visible={formTitleDialog}
+        style={{ width: '450px' }}
+        header='Product Details'
+        modal
+        className='p-fluid'
+        footer={formDialogFooter}
+        onHide={hideFormDialog}
+      >
+        <div className='field'>
+          <label htmlFor='title'>Name</label>
+          <InputText
+            id='title'
+            value={formEdit.title}
+            onChange={(e) => onInputChange(e, 'title')}
+            required
+            autoFocus
+            className={classNames({
+              'p-invalid': formSaveSubmitted && !formEdit.title,
+            })}
+          />
+          {formSaveSubmitted && !formEdit.title && (
+            <small className='p-error'>Name is required.</small>
+          )}
         </div>
       </Dialog>
 
@@ -322,8 +427,8 @@ const Dashboard = (props) => {
 const mapStateProps = (state) => {
   return {
     forms: state.forms,
-    folderId: state.selectedLeftSideBarFolder
+    folderId: state.selectedLeftSideBarFolder,
   }
 }
 
-export default connect(mapStateProps, {getFolderTreeSelect})(Dashboard)
+export default connect(mapStateProps, { getFolderTreeSelect })(Dashboard)
