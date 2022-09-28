@@ -111,10 +111,10 @@ const Dashboard = (props) => {
   //   console.log('Daashboard useEffect Navigation', navigation)
   // }, [navigation.state])
 
-  useEffect(() => {
-    console.log('Dashboard use effect calisti', location)
-    getForms(location.state ? location.state.folderId : null)
-  }, [location.state])
+  // useEffect(() => {
+  //    console.log('Dashboard use effect calisti', location)
+  //   getForms(location.state ? location.state.folderId : null)
+  // }, [location.state])
 
   const createNewForm = async () => {
     const params = {
