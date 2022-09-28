@@ -10,6 +10,9 @@ import './Dashboard.css'
 import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 import { connect } from 'react-redux'
+import {
+  getFolderTreeSelect,
+} from '../../redux/actions/actions.tsx'
 
 const Dashboard = (props) => {
   const location = useLocation()
@@ -119,7 +122,7 @@ const Dashboard = (props) => {
   const createNewForm = async () => {
     const params = {
       title: formName,
-      folder_id: location.state.folderId,
+      folder_id: props.folderId,
     }
 
     const response = await FormService.createForms(params)
@@ -133,7 +136,8 @@ const Dashboard = (props) => {
     } else {
       setFormName('')
       setShowFormDialog(false)
-      getForms(location.state.folderId)
+      //getForms(props.folderId)
+      props.getFolderTreeSelect(props.folderId)
       toast.current.show({
         severity: 'success',
         summary: 'Form Oluşturuldu',
@@ -270,7 +274,7 @@ const Dashboard = (props) => {
       <div className='card mt-5'>
         <DataTable
           ref={dt}
-          value={forms}
+          value={props.forms}
           selection={selectedForms}
           loading={loading}
           onSelectionChange={(e) => setSelectedForms(e.value)}
@@ -318,7 +322,8 @@ const Dashboard = (props) => {
 const mapStateProps = (state) => {
   return {
     forms: state.forms,
+    folderId: state.selectedLeftSideBarFolder
   }
 }
 
-export default connect(mapStateProps, {})(Dashboard)
+export default connect(mapStateProps, {getFolderTreeSelect})(Dashboard)

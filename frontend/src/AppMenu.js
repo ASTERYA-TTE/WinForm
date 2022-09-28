@@ -157,6 +157,7 @@ const AppMenu = (props) => {
     setSelectedKey(e.value)
     //navigate('/home', { state: { folderId: selectedKey } })
     props.getFolderTreeSelect(e.value)
+    props.updateFolderTreeSelect(e.value)
   }
   return (
     <div className='layout-sidebar' onClick={props.onMenuClick}>
