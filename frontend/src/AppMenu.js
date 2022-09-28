@@ -226,7 +226,7 @@ const AppMenu = (props) => {
 
 const mapStateProps = (state) => {
   return {
-    //folders: state.folders,
+    folders: state.folders,
   }
 }
 
