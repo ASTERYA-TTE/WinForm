@@ -155,8 +155,8 @@ const AppMenu = (props) => {
 
   const folderTreeSelect = (e) => {
     setSelectedKey(e.value)
-    //navigate('/home', { state: { folderId: selectedKey } })
-    props.getFolderTreeSelect(e.value);
+    navigate('/home', { state: { folderId: selectedKey } })
+    props.getFolderTreeSelect(e.value)
   }
 
   return (
@@ -226,7 +226,7 @@ const AppMenu = (props) => {
 
 const mapStateProps = (state) => {
   return {
-    folders: state.folders,
+    //folders: state.folders,
   }
 }
 

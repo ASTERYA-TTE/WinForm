@@ -111,10 +111,10 @@ const Dashboard = (props) => {
   //   console.log('Daashboard useEffect Navigation', navigation)
   // }, [navigation.state])
 
-  // useEffect(() => {
-  //   console.log('Dashboard use effect calisti', location)
-  //   getForms(location.state ? location.state.folderId : null)
-  // }, [location.state])
+  useEffect(() => {
+    console.log('Dashboard use effect calisti', location)
+    getForms(location.state ? location.state.folderId : null)
+  }, [location.state])
 
   const createNewForm = async () => {
     const params = {
@@ -246,43 +246,6 @@ const Dashboard = (props) => {
           style={{ float: 'right' }}
         />
       </div>
-      <div>
-        <Dialog
-          header='Edit Form'
-          visible={deleteFormTitle}
-          onHide={() => setDeleteFormTitle(false)}
-          breakpoints={{ '960px': '75vw' }}
-          style={{ width: '30vw' }}
-          footer={renderDeleteDialogFooter}
-        >
-          <hr />
-          <br />
-          <div>
-            <h4>
-              <b>Edit Form Name</b>
-            </h4>
-            <InputText
-              type='text'
-              value={formEditName}
-              placeholder={forms.title}
-              className='p-inputtext-lg block'
-              style={{ width: '100%' }}
-              onChange={(e) => setFormEditName(e.target.value)}
-            />
-          </div>
-          <br />
-          <hr />
-        </Dialog>
-
-        <Button
-          label='Create New Form'
-          className='p-button-text p-button-raised -mt-6'
-          onClick={() => {
-            setShowFormDialog(true)
-          }}
-          style={{ float: 'right' }}
-        />
-      </div>
 
       <Dialog
         visible={deleteFormTitle}
@@ -307,7 +270,7 @@ const Dashboard = (props) => {
       <div className='card mt-5'>
         <DataTable
           ref={dt}
-          value={props.forms}
+          value={forms}
           selection={selectedForms}
           loading={loading}
           onSelectionChange={(e) => setSelectedForms(e.value)}
@@ -352,7 +315,6 @@ const Dashboard = (props) => {
   )
 }
 
-
 const mapStateProps = (state) => {
   return {
     forms: state.forms,
@@ -360,5 +322,3 @@ const mapStateProps = (state) => {
 }
 
 export default connect(mapStateProps, {})(Dashboard)
-
-
