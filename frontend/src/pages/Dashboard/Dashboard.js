@@ -14,10 +14,6 @@ import { getFolderTreeSelect } from '../../redux/actions/actions.tsx'
 import { classNames } from 'primereact/utils'
 
 const Dashboard = (props) => {
-  let emptyProduct = {
-    id: null,
-    title: '',
-  }
   const location = useLocation()
   const navigation = useNavigation()
   const navigate = useNavigate()
@@ -201,7 +197,7 @@ const Dashboard = (props) => {
     setForms(form)
     console.log(formEditName, 'formEditName', setForms(form))
     setDeleteFormDialog(false)
-    setFormEditName(emptyProduct)
+    setFormEditName(emptyForm)
     toast.current.show({
       severity: 'success',
       summary: 'Successful',
@@ -238,6 +234,11 @@ const Dashboard = (props) => {
       />
     </React.Fragment>
   )
+
+  let emptyForm = {
+    id: null,
+    title: '',
+  }
 
   const editForm = (form) => {
     setFormEditName({ ...form })
@@ -281,7 +282,7 @@ const Dashboard = (props) => {
         props.getFolderTreeSelect(props.folderId)
         setForms(formsAll)
         setFormTitleDialog(false)
-        setFormEditName(emptyProduct)
+        setFormEditName(emptyForm)
       }
     }
     console.log(
