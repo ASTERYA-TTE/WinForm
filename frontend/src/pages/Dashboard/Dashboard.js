@@ -14,6 +14,10 @@ import { getFolderTreeSelect } from '../../redux/actions/actions.tsx'
 import { classNames } from 'primereact/utils'
 
 const Dashboard = (props) => {
+  let emptyProduct = {
+    id: null,
+    title: '',
+  }
   const location = useLocation()
   const navigation = useNavigation()
   const navigate = useNavigate()
@@ -24,7 +28,7 @@ const Dashboard = (props) => {
   const [loading, setLoading] = useState(false)
   const [showFormDialog, setShowFormDialog] = useState(false)
   const [formName, setFormName] = useState('')
-  const [formEdit, setFormEdit] = useState('')
+  const [formEditName, setFormEditName] = useState('')
   const [deleteFormDialog, setDeleteFormDialog] = useState(false)
   const [formTitleDialog, setFormTitleDialog] = useState(false)
   const [formSaveSubmitted, setFormSaveSubmitted] = useState(false)
@@ -154,7 +158,7 @@ const Dashboard = (props) => {
     return (
       <div>
         <Button
-          label='No'
+          label='Cancel'
           icon='pi pi-times'
           onClick={() => setShowFormDialog(false)}
           className=' inputbutton p-button-raised p-button-plain p-button-text'
@@ -187,19 +191,21 @@ const Dashboard = (props) => {
   }
 
   const confirmDeleteForm = (form) => {
-    setFormEdit(form)
+    setFormEditName(form)
     setDeleteFormDialog(true)
   }
 
   const deleteForm = () => {
-    let _formsAll = forms.filter((val) => val.id !== formEdit.id)
-    setForms(_formsAll)
+    let form = forms.filter((val) => val.id !== formEditName.id)
+    console.log(form, 'formsAll', 'Title', formEditName.formTitle)
+    setForms(form)
+    console.log(formEditName, 'formEditName', setForms(form))
     setDeleteFormDialog(false)
-    setFormEdit('')
+    setFormEditName(emptyProduct)
     toast.current.show({
       severity: 'success',
       summary: 'Successful',
-      detail: 'Product Deleted',
+      detail: `"${formEditName.title}"  Formu Silindi`,
       life: 3000,
     })
   }
@@ -214,14 +220,6 @@ const Dashboard = (props) => {
     }
 
     return index
-  }
-
-  const onInputChange = (e, title) => {
-    const val = (e.target && e.target.value) || ''
-    let _formOne = { ...formEdit }
-    _formOne[`${title}`] = val
-
-    setFormEdit(_formOne)
   }
 
   const deleteFormDialogFooter = (
@@ -241,34 +239,59 @@ const Dashboard = (props) => {
     </React.Fragment>
   )
 
-  const saveForm = () => {
+  const editForm = (form) => {
+    setFormEditName({ ...form })
+    setFormTitleDialog(true)
+  }
+
+  const getUpdatedFormTitle = async (formId) => {
     setFormSaveSubmitted(true)
 
-    if (formEdit.title.trim()) {
-      let _formsAll = [...forms]
-      let _formOne = { ...formEdit }
-      console.log(_formOne, 'formOne')
-      if (formEdit.id) {
-        const index = findIndexById(formEdit.id)
-        console.log(index, 'index')
-        _formsAll[index] = _formOne
+    const params = {
+      formId: formId,
+      data: {
+        title: formEditName.title,
+      },
+    }
+    const response = FormService.updateForm(params)
+
+    if (response.error) {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Form İsmi Güncellenemedi',
+        detail:
+          'Form İSmi güncellenemedi! Lütfen daha sonra tekrar deneyiziniz.',
+        life: 3000,
+      })
+    } else {
+      if (formEditName.title.trim()) {
+        let formsAll = [...forms]
+        let formTitle = { ...formEditName }
+
+        const index = findIndexById(formEditName.id)
+
+        formsAll[index] = formTitle
         toast.current.show({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Updated',
+          detail: `Form İsmi "${formEditName.title}" olarak güncellendi`,
           life: 3000,
         })
+
+        props.getFolderTreeSelect(props.folderId)
+        setForms(formsAll)
+        setFormTitleDialog(false)
+        setFormEditName(emptyProduct)
       }
-
-      setForms(_formsAll)
-      setFormTitleDialog(false)
-      setFormEdit('')
     }
-  }
-
-  const editForm = (form) => {
-    setFormEdit({ ...form })
-    setFormTitleDialog(true)
+    console.log(
+      'formEditName',
+      formEditName,
+      'forms',
+      forms,
+      'folderId',
+      props.folderId
+    )
   }
 
   const formDialogFooter = (
@@ -283,7 +306,7 @@ const Dashboard = (props) => {
         label='Save'
         icon='pi pi-check'
         className='p-button-text'
-        onClick={saveForm}
+        onClick={getUpdatedFormTitle}
       />
     </React.Fragment>
   )
@@ -341,9 +364,9 @@ const Dashboard = (props) => {
             className='pi pi-exclamation-triangle mr-3'
             style={{ fontSize: '2rem' }}
           />
-          {formEdit && (
+          {formEditName && (
             <span>
-              Are you sure you want to delete <b>{formEdit.title}</b>?
+              Are you sure you want to delete <b>{formEditName.title}</b>?
             </span>
           )}
         </div>
@@ -362,15 +385,14 @@ const Dashboard = (props) => {
           <label htmlFor='title'>Name</label>
           <InputText
             id='title'
-            value={formEdit.title}
-            onChange={(e) => onInputChange(e, 'title')}
+            value={formEditName.title}
+            onChange={(e) =>
+              setFormEditName({ ...formEditName, title: e.target.value })
+            }
             required
             autoFocus
-            className={classNames({
-              'p-invalid': formSaveSubmitted && !formEdit.title,
-            })}
           />
-          {formSaveSubmitted && !formEdit.title && (
+          {formSaveSubmitted && !formEditName.title && (
             <small className='p-error'>Name is required.</small>
           )}
         </div>

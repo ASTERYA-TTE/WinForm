@@ -137,7 +137,7 @@ const AppMenu = (props) => {
     return (
       <div>
         <Button
-          label='No'
+          label='Cancel'
           icon='pi pi-times'
           onClick={() => setShowFolderDialog(false)}
           className=' inputbutton p-button-raised p-button-plain p-button-text'

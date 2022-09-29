@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
 import { Button } from 'primereact/button'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
+  const [login, setLogin] = useState(true)
   return (
     <div className='login-body'>
       <div className='login-wrapper'>
@@ -46,7 +47,7 @@ const Login = () => {
             <InputText placeholder='Email' />
             <Password placeholder='Password' />
             <Link to='/home'>
-              <Button label='CONTINUE' type='button'></Button>
+              {login && <Button label='CONTINUE' type='button'></Button>}
             </Link>
           </div>
           <p>
