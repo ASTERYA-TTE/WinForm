@@ -202,26 +202,25 @@ const Dashboard = (props) => {
       form_id: formId,
     }
 
-    FormService.deleteForm(params).then((response) => {
-      if (response.error) {
-        toast.current.show({
-          severity: 'error',
-          summary: 'Form Silinemedi',
-          detail: 'Form Silinemedi! Lütfen daha sonra tekrar deneyiniz.',
-          life: 3000,
-        })
-      } else {
-        setDeleteFormDialog(false)
-        props.getFolderTreeSelect(props.folderId)
-        setFormEditName(emptyForm)
-        toast.current.show({
-          severity: 'success',
-          summary: 'Form Silindi',
-          detail: `${formEditName.title} Form Silindi`,
-          life: 3000,
-        })
-      }
-    })
+    const response = FormService.deleteForm(params)
+    if (response.error) {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Form Silinemedi',
+        detail: 'Form Silinemedi! Lütfen daha sonra tekrar deneyiniz.',
+        life: 3000,
+      })
+    } else {
+      setDeleteFormDialog(false)
+      props.getFolderTreeSelect(props.folderId)
+      setFormEditName(emptyForm)
+      toast.current.show({
+        severity: 'success',
+        summary: 'Form Silindi',
+        detail: `${formEditName.title} Form Silindi`,
+        life: 3000,
+      })
+    }
 
     // let form = forms.filter((val) => val.id !== formEditName.id)
     // console.log(form, 'formsAll', 'Title', formEditName.formTitle)
