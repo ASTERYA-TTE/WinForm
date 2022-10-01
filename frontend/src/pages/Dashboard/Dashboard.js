@@ -39,7 +39,7 @@ const Dashboard = (props) => {
           <div className='template'>
             <Button
               className='formedit p-1 p-button-rounded '
-              onClick={() => saveEditForm(rowData)}
+              //onClick={() => saveEditForm(rowData)}
             >
               <span className='px-3'>
                 <i className='pi pi-pencil'></i>
