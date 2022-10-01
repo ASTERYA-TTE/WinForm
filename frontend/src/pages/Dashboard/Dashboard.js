@@ -11,7 +11,6 @@ import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import FormService from '../../services/formService'
 import { connect } from 'react-redux'
 import { getFolderTreeSelect } from '../../redux/actions/actions.tsx'
-import { classNames } from 'primereact/utils'
 
 const Dashboard = (props) => {
   const location = useLocation()
@@ -31,6 +30,8 @@ const Dashboard = (props) => {
   const toast = useRef(null)
   const dt = useRef(null)
 
+  //<!-- ========================= DATA TABLE  BUTTON ========================= -->
+
   const rightToolbarTemplate = (rowData) => {
     return (
       <div style={{ display: 'flex', float: 'right' }}>
@@ -38,7 +39,7 @@ const Dashboard = (props) => {
           <div className='template'>
             <Button
               className='formedit p-1 p-button-rounded '
-              onClick={() => editForm(rowData)}
+              onClick={() => saveEditForm(rowData)}
             >
               <span className='px-3'>
                 <i className='pi pi-pencil'></i>
@@ -102,6 +103,8 @@ const Dashboard = (props) => {
     )
   }
 
+  //<!-- ========================= DATA TABLE  BUTTON ========================= -->
+
   // const getForms = async (folderId) => {
   //   const params = {
   //     folder_id: folderId,
@@ -122,6 +125,7 @@ const Dashboard = (props) => {
   //   getForms(location.state ? location.state.folderId : null)
   // }, [location.state])
 
+  //<!-- ========================= CREATE FORM END  ========================= -->
   const createNewForm = async () => {
     const params = {
       title: formName,
@@ -174,9 +178,11 @@ const Dashboard = (props) => {
     navigate('/editor', {
       state: { formId: rowData._id, title: rowData.title },
     })
-    console.log(rowData)
   }
 
+  //<!-- ========================= CREATE FORM END  ========================= -->
+
+  //<!-- ========================= DELETE  AND EDIT FORM START  ========================= -->
   const hideFormDialog = () => {
     setFormSaveSubmitted(false)
     setFormTitleDialog(false)
@@ -191,19 +197,44 @@ const Dashboard = (props) => {
     setDeleteFormDialog(true)
   }
 
-  const deleteForm = () => {
-    let form = forms.filter((val) => val.id !== formEditName.id)
-    console.log(form, 'formsAll', 'Title', formEditName.formTitle)
-    setForms(form)
-    console.log(formEditName, 'formEditName', setForms(form))
-    setDeleteFormDialog(false)
-    setFormEditName(emptyForm)
-    toast.current.show({
-      severity: 'success',
-      summary: 'Successful',
-      detail: `"${formEditName.title}"  Formu Silindi`,
-      life: 3000,
+  const deleteForm = (formId) => {
+    const params = {
+      form_id: formId,
+    }
+
+    FormService.deleteForm(params).then((response) => {
+      if (response.error) {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Form Silinemedi',
+          detail: 'Form Silinemedi! Lütfen daha sonra tekrar deneyiniz.',
+          life: 3000,
+        })
+      } else {
+        setDeleteFormDialog(false)
+        props.getFolderTreeSelect(props.folderId)
+        setFormEditName(emptyForm)
+        toast.current.show({
+          severity: 'success',
+          summary: 'Form Silindi',
+          detail: `${formEditName.title} Form Silindi`,
+          life: 3000,
+        })
+      }
     })
+
+    // let form = forms.filter((val) => val.id !== formEditName.id)
+    // console.log(form, 'formsAll', 'Title', formEditName.formTitle)
+    // setForms(form)
+    // console.log(formEditName, 'formEditName', setForms(form))
+    // setDeleteFormDialog(false)
+    // setFormEditName(emptyForm)
+    // toast.current.show({
+    //   severity: 'success',
+    //   summary: 'Successful',
+    //   detail: `"${formEditName.title}"  Formu Silindi`,
+    //   life: 3000,
+    // })
   }
 
   const findIndexById = (id) => {
@@ -239,8 +270,10 @@ const Dashboard = (props) => {
     id: null,
     title: '',
   }
+  //<!-- ========================= DELETE FORM END  ========================= -->
 
-  const editForm = (form) => {
+  //<!-- ========================= EDIT FORM START  ========================= -->
+  const saveEditForm = (form) => {
     setFormEditName({ ...form })
     setFormTitleDialog(true)
   }
@@ -260,8 +293,7 @@ const Dashboard = (props) => {
       toast.current.show({
         severity: 'error',
         summary: 'Form İsmi Güncellenemedi',
-        detail:
-          'Form İSmi güncellenemedi! Lütfen daha sonra tekrar deneyiziniz.',
+        detail: 'Form İsmi güncellenemedi! Lütfen daha sonra tekrar deneyiniz.',
         life: 3000,
       })
     } else {
@@ -272,14 +304,14 @@ const Dashboard = (props) => {
         const index = findIndexById(formEditName.id)
 
         formsAll[index] = formTitle
+
         toast.current.show({
           severity: 'success',
           summary: 'Successful',
           detail: `Form İsmi "${formEditName.title}" olarak güncellendi`,
           life: 3000,
         })
-
-        props.getFolderTreeSelect(props.folderId)
+        props.getFolderTreeSelect(props.formId)
         setForms(formsAll)
         setFormTitleDialog(false)
         setFormEditName(emptyForm)
@@ -311,6 +343,9 @@ const Dashboard = (props) => {
       />
     </React.Fragment>
   )
+
+  //<!-- ========================= EDIT FORM END  ========================= -->
+
   return (
     <div className='datatable-crud-demo'>
       <Toast ref={toast} />
@@ -376,14 +411,14 @@ const Dashboard = (props) => {
       <Dialog
         visible={formTitleDialog}
         style={{ width: '450px' }}
-        header='Product Details'
+        header='Edit Form Title'
         modal
         className='p-fluid'
         footer={formDialogFooter}
         onHide={hideFormDialog}
       >
         <div className='field'>
-          <label htmlFor='title'>Name</label>
+          <label htmlFor='title'>Form Name</label>
           <InputText
             id='title'
             value={formEditName.title}
