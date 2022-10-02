@@ -39,7 +39,7 @@ const Dashboard = (props) => {
           <div className='template'>
             <Button
               className='formedit p-1 p-button-rounded '
-              //onClick={() => saveEditForm(rowData)}
+              onClick={() => saveEditForm(rowData)}
             >
               <span className='px-3'>
                 <i className='pi pi-pencil'></i>
@@ -197,55 +197,30 @@ const Dashboard = (props) => {
     setDeleteFormDialog(true)
   }
 
-  const deleteForm = (formId) => {
+  const deleteForm = () => {
     const params = {
-      form_id: formId,
+      formId: formEditName._id,
     }
 
-    const response = FormService.deleteForm(params)
-    if (response.error) {
-      toast.current.show({
-        severity: 'error',
-        summary: 'Form Silinemedi',
-        detail: 'Form Silinemedi! Lütfen daha sonra tekrar deneyiniz.',
-        life: 3000,
-      })
-    } else {
-      setDeleteFormDialog(false)
-      props.getFolderTreeSelect(props.folderId)
-      setFormEditName(emptyForm)
-      toast.current.show({
-        severity: 'success',
-        summary: 'Form Silindi',
-        detail: `${formEditName.title} Form Silindi`,
-        life: 3000,
-      })
-    }
-
-    // let form = forms.filter((val) => val.id !== formEditName.id)
-    // console.log(form, 'formsAll', 'Title', formEditName.formTitle)
-    // setForms(form)
-    // console.log(formEditName, 'formEditName', setForms(form))
-    // setDeleteFormDialog(false)
-    // setFormEditName(emptyForm)
-    // toast.current.show({
-    //   severity: 'success',
-    //   summary: 'Successful',
-    //   detail: `"${formEditName.title}"  Formu Silindi`,
-    //   life: 3000,
-    // })
-  }
-
-  const findIndexById = (id) => {
-    let index = -1
-    for (let i = 0; i < forms.length; i++) {
-      if (forms[i].id === id) {
-        index = i
-        break
+    FormService.deleteOneForm(params).then((response) => {
+      if (response.error) {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Form Silinemedi',
+          detail: 'Form Silinemedi! Lütfen daha sonra tekrar deneyiniz.',
+          life: 3000,
+        })
+      } else {
+        setDeleteFormDialog(false)
+        props.getFolderTreeSelect(props.folderId)
+        toast.current.show({
+          severity: 'success',
+          summary: 'Form Silindi',
+          detail: `${formEditName.title} Formu Silindi`,
+          life: 3000,
+        })
       }
-    }
-
-    return index
+    })
   }
 
   const deleteFormDialogFooter = (
@@ -265,65 +240,44 @@ const Dashboard = (props) => {
     </React.Fragment>
   )
 
-  let emptyForm = {
-    id: null,
-    title: '',
-  }
   //<!-- ========================= DELETE FORM END  ========================= -->
 
   //<!-- ========================= EDIT FORM START  ========================= -->
   const saveEditForm = (form) => {
     setFormEditName({ ...form })
     setFormTitleDialog(true)
+    console.log(form, 'form')
   }
 
-  const getUpdatedFormTitle = async (formId) => {
+  const getUpdatedFormTitle = async () => {
     setFormSaveSubmitted(true)
 
     const params = {
-      formId: formId,
-      data: {
-        title: formEditName.title,
-      },
+      formId: formEditName._id,
+      title: formEditName.title,
     }
-    const response = FormService.updateForm(params)
 
+    const response = await FormService.formTitleUpdate(params)
     if (response.error) {
       toast.current.show({
         severity: 'error',
-        summary: 'Form İsmi Güncellenemedi',
-        detail: 'Form İsmi güncellenemedi! Lütfen daha sonra tekrar deneyiniz.',
+        summary: 'Form Güncellenemedi',
+        detail: 'Form Güncellenemedi! Lütfen daha sonra tekrar deneyiniz.',
         life: 3000,
       })
     } else {
-      if (formEditName.title.trim()) {
-        let formsAll = [...forms]
-        let formTitle = { ...formEditName }
-
-        const index = findIndexById(formEditName.id)
-
-        formsAll[index] = formTitle
-
-        toast.current.show({
-          severity: 'success',
-          summary: 'Successful',
-          detail: `Form İsmi "${formEditName.title}" olarak güncellendi`,
-          life: 3000,
-        })
-        props.getFolderTreeSelect(props.formId)
-        setForms(formsAll)
-        setFormTitleDialog(false)
-        setFormEditName(emptyForm)
-      }
+      setFormTitleDialog(false)
+      props.getFolderTreeSelect(props.folderId)
+      setFormEditName({
+        title: '',
+      })
+      toast.current.show({
+        severity: 'success',
+        summary: 'Form Güncellendi',
+        detail: `form ${formEditName.title} olarak Güncellendi`,
+        life: 3000,
+      })
     }
-    console.log(
-      'formEditName',
-      formEditName,
-      'forms',
-      forms,
-      'folderId',
-      props.folderId
-    )
   }
 
   const formDialogFooter = (
