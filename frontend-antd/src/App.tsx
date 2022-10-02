@@ -27,6 +27,7 @@ import {
 import { Tabs, Card, Button, Spin } from 'antd'
 import * as ICONS from '@ant-design/icons'
 import { action } from '@formily/reactive'
+import {WinFormBuilder} from 'winform-react'
 
 const form = createForm({
   effects() {
@@ -909,7 +910,11 @@ export default () => {
     }, 2000)
   }, [])
   return (
+
     <div>
+      <WinFormBuilder formId="633997bd41c18ddda81343dd"/>
+    
+
       <Form form={form} labelCol={6} wrapperCol={10}>
         <SchemaField schema={schema} />
         <br />

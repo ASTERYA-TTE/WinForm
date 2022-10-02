@@ -1,0 +1,50 @@
+{
+  "name": "winform-react",
+  "version": "0.0.14",
+  "description": "Dynamic component for form builder",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "author": "ismail başaran",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "@rollup/plugin-node-resolve": "^11.1.1",
+    "@storybook/addon-actions": "^6.1.16",
+    "@storybook/addon-essentials": "^6.1.16",
+    "@storybook/addon-links": "^6.1.16",
+    "@storybook/react": "^6.1.16",
+    "babel-loader": "^8.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rollup": "^2.38.4",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "typescript": "^4.1.5"
+  },
+  "peerDependencies": {
+    "@formily/antd": "^2.2.5",
+    "@formily/react": "^2.2.5",
+    "@formily/core": "^2.2.6",
+    "axios": "^0.21.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@formily/antd": "^2.2.5",
+    "@formily/core": "^2.2.6",
+    "@formily/react": "^2.2.5",
+    "axios": "^0.21.4"
+  }
+}
