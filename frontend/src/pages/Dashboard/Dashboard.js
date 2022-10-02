@@ -410,7 +410,12 @@ const Dashboard = (props) => {
             headerStyle={{ width: '3rem' }}
             exportable={false}
           ></Column>
-          <Column field='_id' header='formId' style={{ width: '25%' }}></Column>
+          <Column
+            field='_id'
+            header='formId'
+            style={{ width: '25%' }}
+            className='myforms'
+          ></Column>
           <Column
             field='title'
             header='Name'
