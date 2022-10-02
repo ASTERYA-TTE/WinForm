@@ -10,7 +10,7 @@ export const ActionsWidget = observer(() => {
   const location = useLocation()
   const designer = useDesigner()
   useEffect(() => {
-    if(location.state) {
+    if (location.state) {
       loadInitialSchema(designer, location.state.formId)
     }
   }, [location.state])
@@ -37,10 +37,9 @@ export const ActionsWidget = observer(() => {
       <Button
         onClick={() => {
           console.log('Location state ne geliyor', location)
-          if (location.state && location.state.formId){
+          if (location.state && location.state.formId) {
             saveSchema(designer, location.state.formId)
           }
-          
         }}
       >
         <TextWidget>Save</TextWidget>
@@ -48,23 +47,10 @@ export const ActionsWidget = observer(() => {
       <Button
         type='primary'
         onClick={() => {
-         // Publish aksiyonu
+          // Publish aksiyonu
         }}
       >
         <TextWidget>Publish</TextWidget>
-      </Button>
-      <Button
-        type='primary'
-        onClick={() => {
-          window.location.href = '/home'
-        }}
-        style={{
-          backgroundColor: 'white',
-          border: 'none',
-          color: '#1976d2 ',
-        }}
-      >
-        <TextWidget>Dashboard</TextWidget>
       </Button>
     </Space>
   )
