@@ -410,26 +410,15 @@ const Dashboard = (props) => {
             headerStyle={{ width: '3rem' }}
             exportable={false}
           ></Column>
-          <Column field='_id' header='formId'></Column>
+          <Column field='_id' header='formId' style={{ width: '25%' }}></Column>
           <Column
             field='title'
             header='Name'
             sortable
-            style={{ width: 'auto' }}
             className='myforms '
           ></Column>
-          <Column
-            field=''
-            header='Status'
-            body='New Create'
-            sortable
-            style={{ width: 'auto' }}
-          ></Column>
-          <Column
-            className='link'
-            body={rightToolbarTemplate}
-            style={{ width: 'auto' }}
-          ></Column>
+          <Column field='' header='Status' body='New Create' sortable></Column>
+          <Column className='link' body={rightToolbarTemplate}></Column>
         </DataTable>
       </div>
     </div>
