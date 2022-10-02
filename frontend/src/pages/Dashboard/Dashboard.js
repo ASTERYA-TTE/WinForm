@@ -413,7 +413,7 @@ const Dashboard = (props) => {
           <Column
             field='_id'
             header='formId'
-            style={{ width: '25%' }}
+            style={{ width: '25rem' }}
             className='myforms'
           ></Column>
           <Column
