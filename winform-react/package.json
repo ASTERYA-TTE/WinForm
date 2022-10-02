@@ -1,6 +1,6 @@
 {
   "name": "winform-react",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "description": "Dynamic component for form builder",
   "main": "lib/index.js",
   "module": "lib/index.es.js",

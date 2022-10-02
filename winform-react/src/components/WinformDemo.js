@@ -67,7 +67,14 @@ function WinFormBuilder(props) {
     if (formData) {
       let fData = JSON.parse(formData.data)
       return (
-        <Form form={form} onAutoSubmit={console.log}>
+        <Form
+          form={form}
+          // layout='vertical'
+          // size='large'
+          labelCol={6}
+          wrapperCol={10}
+          onAutoSubmit={console.log}
+        >
           <SchemaField schema={fData.schema} />
           <Submit block size='large'>
             KAYDET

@@ -1,14 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-import {WinFormBuilder, DemoComp} from 'winform-react'
+import logo from './logo.svg'
+import './App.css'
+import { WinFormBuilder, DemoComp } from 'winform-react'
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Merhaba Form Builder</h1>
-     <WinFormBuilder formId="633997bd41c18ddda81343dd"/>
+      <WinFormBuilder formId='6339c0f32ff4c505e5eba528' />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
